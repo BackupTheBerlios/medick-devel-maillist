@@ -1,0 +1,77 @@
+From oancea at gmail.com  Mon Jun 11 16:36:38 2007
+From: oancea at gmail.com (Aurelian Oancea)
+Date: Mon, 11 Jun 2007 17:36:38 +0300
+Subject: [Medick-devel] Medick Reloaded
+Message-ID: <514f44140706110736q5c4ecbd0p925c7c5a72227b28@mail.gmail.com>
+
+Dear all,
+
+The medick PHP5 Framework is still alive and I hope to release a new
+version by the end of this week. The new medick version will be 0.4
+and not 0.3.
+
+Compatibility breaks:
+
+1. Last year, the plan was to remove the XML configuration file and to
+introduce some plain PHP code to configure a medick application.
+
+After one year, I don't think that I want to make this change, even
+more, I will like to revert the database settings back to the XML once
+again.
+
+2. In medick one could use an array of strings as before filters for
+controllers, but the method to do so was called *before_filter*, so it
+will make more sense to rename that to *before_filters*.
+
+New features:
+
+1. after filters for controllers
+2. HTTPRequest gets a is_xhr() method to indicate if the request was
+made using an AJAX call
+3. medick will know how to render JSON with render_json
+
+Today, while I was reading the code from ActionController, I have
+realized how many nice features medick has but without any
+documentation. So the focus for me is the documentation.
+
+
+That's it for now. Take care.
+-- 
+Aurelian Oancea
+
+Web: http://www.locknet.ro
+
+
+From mariusrugan at gmail.com  Tue Jun 12 15:17:12 2007
+From: mariusrugan at gmail.com (marius.rugan)
+Date: Tue, 12 Jun 2007 13:17:12 +0000
+Subject: [Medick-devel] Your account has been created
+Message-ID: <466e9ca6.53c76e7b.141a.01ef@mx.google.com>
+
+Hi guest,
+
+marius.rugan created new account for you. Visit http://ac.homeunix.org and login with:
+
+Username: guest 
+Password: guest 
+
+--
+http://ac.homeunix.org
+
+
+From oancea at gmail.com  Sun Jun 17 19:28:34 2007
+From: oancea at gmail.com (Aurelian Oancea)
+Date: Sun, 17 Jun 2007 20:28:34 +0300
+Subject: [Medick-devel] Medick-0.4.0
+Message-ID: <514f44140706171028jab6c155je03b6eda812e83a2@mail.gmail.com>
+
+Deal All,
+
+Medick version 0.4.0 is out.
+Read the announcement here:
+http://www.locknet.ro/article/medick-version-040-was-released
+
+-- 
+Aurelian
+
+

@@ -1,0 +1,2880 @@
+From apanaitescu at gmail.com  Tue Jan  3 17:51:14 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Tue, 3 Jan 2006 18:51:14 +0200
+Subject: [Medick-devel] This month in Medick
+In-Reply-To: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+References: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+Message-ID: <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+
+Hello Aurelian,
+
+I was on vacantion this month, but here are my comments:
+
+On 12/26/05, aurelian wrote:
+> Hello,
+>
+> I have made some _major_ changes in medick this month:
+>
+> 1. php version 5.1.1 is required.
+
+Grr, I didnt upgrade yet, and I think that at least this month I will
+stay to .0.5, there are only minor changes to make it run under 5.0.5
+(patch attached :D), so could you please reconsider this?
+
+> 2. "clean-up" the routing system, is not yet completely done, but we
+> now have a RoR like routing mechanism.
+
+It`s nice, but there still a long way to go, I will try to help you here.
+
+> 3. medick application generator (will be refactored later on, but
+> right now this plain php script will help you to get started with
+> medick.
+
+super-duper.
+
+> 4. removed the cool backtrace from the LoggingEvent object (was nice,
+> but a real pain in the ass when you try to debug with var_dump :))
+> 5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+
+mmm, oki.
+
+> More refactorings will soon affect the ActiveRecord implementation.
+>
+> B[e]st Regards and a Happy New Year!
+// typo.
+> Aurelian Oancea
+
+Some small notes:
+ -> How do you test?
+Last changes on unit-test where made somewhere in November and you did
+some core changes since then. How do you know that everything works as
+expected?
+
+ -> Another thing that I quite dont like is the implementation that
+you choose for Iterator/Collections in medick.util. It strange, and
+"it stinks"!
+
+And of course, php 5.1.1 as a requirement.
+
+But in the end I think you did a great work in December :)
+-------------- next part --------------
+Index: medick/util.php
+===================================================================
+--- medick/util.php	(revision 312)
++++ medick/util.php	(working copy)
+@@ -142,7 +142,7 @@
+ 
+     private $elements;
+ 
+-    public function AbstractCollection(Array $elements=array()) {
++    public function AbstractCollection(/*Array*/ $elements=array()) {
+         $this->elements= $elements;
+     }
+ 
+Index: action/controller/Route.php
+===================================================================
+--- action/controller/Route.php	(revision 312)
++++ action/controller/Route.php	(working copy)
+@@ -90,7 +90,7 @@
+     private $components;
+ 
+ 
+-    public function Route($route_list, $name = '', Array $defaults = array(), Array $requirements = array()) {
++    public function Route($route_list, $name = '', /*Array*/ $defaults = array(), /*Array*/ $requirements = array()) {
+ 
+         $this->components= new Components();
+ 
+@@ -140,7 +140,7 @@
+      *
+      * @param array an array witch holds defaults values for this Route.
+      */
+-    public function setDefaults(Array $defaults) {
++    public function setDefaults(/*Array*/ $defaults) {
+         $this->defaults= $defaults;
+     }
+ 
+
+From oancea at gmail.com  Tue Jan  3 21:20:54 2006
+From: oancea at gmail.com (aurelian)
+Date: Tue, 3 Jan 2006 22:20:54 +0200
+Subject: [Medick-devel] This month in Medick
+In-Reply-To: <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+References: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+	 <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+Message-ID: <514f44140601031220p329a08c2o401214f8d3bd0b44@mail.gmail.com>
+
+Hi Andrei,
+
+[...]
+> Grr, I didnt upgrade yet, and I think that at least this month I will
+> stay to .0.5, there are only minor changes to make it run under 5.0.5
+> (patch attached :D), so could you please reconsider this?
+[...]
+Oki, commited your patch [1]
+At locknet is still php 5.0.5, so probably when they will upgrade,
+medick will also go on the new version. This was the only reason.
+
+> > 2. "clean-up" the routing system, is not yet completely done, but we
+> > now have a RoR like routing mechanism.
+>
+> It`s nice, but there still a long way to go, I will try to help you here.
+[...]
+You know that I appreciate any help/comment:)
+[...]
+> Some small notes:
+>  -> How do you test?
+> Last changes on unit-test where made somewhere in November and you did
+> some core changes since then. How do you know that everything works as
+> expected?
+
+Well, I know, shame on me, right now I don't even know in what stage
+is simpletest.
+I have 3 applications installed locally (one is the eltodo) and I
+browse them. If any wierd behavior is spotted I try to fix it. The
+other two applications:
+elproject (for testing ActiveRecord:::Asociations)
+depot (for session testing), somwhow similar with Rails depot application.
+
+>  -> Another thing that I quite dont like is the implementation that
+> you choose for Iterator/Collections in medick.util. It strange, and
+> "it stinks"!
+
+Why do you think it sucks? I know it lacks some features and that the
+implementation is a little bit strange:
+accesing an element via $it->current(); before $it->next(); will cause
+a php error probably.
+
+> And of course, php 5.1.1 as a requirement.
+
+Fix that :)
+
+
+[1]: https://lists.berlios.de/pipermail/medick-svn/2006-January/000109.html
+
+--
+aurelian.
+
+
+From oancea at gmail.com  Tue Jan  3 21:56:04 2006
+From: oancea at gmail.com (aurelian)
+Date: Tue, 3 Jan 2006 22:56:04 +0200
+Subject: [Medick-devel] Roadmap to 0.1.0
+Message-ID: <514f44140601031256u34751715mff82ca9c661d4568@mail.gmail.com>
+
+Hi,
+
+This is the current roadmap for medick 0.1.0 (planned features and
+release dates):
+
+v 0.0.4
+----------
+release date: ASAP! 9.January max: 16 January:
+  -> ActiveRecordBase: some clean-up`s.
+      * ActiveRecordBase::find() method will be affected. I already
+wrote some code but I cannot find the file right now :(
+
+v 0.0.5
+----------
+release date 2.February, max 16 February.
+  -> more work on Routing system.
+  -> validation system
+  -> the flash thing.
+
+v 0.0.5 will become 0.1.0 and it will move the tag of the project from
+planning to next step (alpha?).
+0.1.0 will not receive any new features (subject of change), just
+minor code fixes and the development will start on version 0.2.0.
+
+0.1.0 will stay on svn as a TAG (probably 0_1_0) and updates (like
+0.1.1) with minor code changes will be released from time to time.
+
+I will start to work on the new fastwork[1] web site, this will add
+those planned features into medick. So release 0.1.0 will depend on
+how fast I will create/design the fastwork web space.
+
+Any dates that I reffer to in this mail are relative, but I will try
+to fallow this roadmap.
+
+Features planned for 0.2.0 are on the project TODO[2] list, but for
+sure, php 5.1.1 will be requierd.
+I even consider using php patched version from phpnamespaces.org.
+
+Also UnitTests and the medick web site[3] are marked with highest
+priority, but this will depend on my mood.
+
+[1] http://fastwork.locknet.ro
+[2] http://svn.berlios.de/wsvn/medick/trunk/TODO?op=file&rev=0&sc=0
+[3] http://medick.locknet.ro
+
+--
+aurelian
+
+
+From apanaitescu at gmail.com  Wed Jan  4 11:12:05 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Wed, 4 Jan 2006 12:12:05 +0200
+Subject: [Medick-devel] This month in Medick
+In-Reply-To: <514f44140601031220p329a08c2o401214f8d3bd0b44@mail.gmail.com>
+References: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+	 <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+	 <514f44140601031220p329a08c2o401214f8d3bd0b44@mail.gmail.com>
+Message-ID: <4e6a12c10601040212i43b967co527b9419f957bfd6@mail.gmail.com>
+
+> Oki, commited your patch [1]
+
+thanks.
+
+> Well, I know, shame on me, right now I don't even know in what stage
+> is simpletest.
+
+SimpleTest is still vorking with php 5.0.5
+
+> I have 3 applications installed locally (one is the eltodo) and I
+> browse them. If any wierd behavior is spotted I try to fix it. The
+> other two applications:
+> elproject (for testing ActiveRecord:::Asociations)
+> depot (for session testing), somwhow similar with Rails depot application.
+
+Great, add them to the repository!
+
+Anyway, I`ve attached a patch to make some of the tests pass:
+
+====== Medick Framework Unit Tests =====
+OK
+Test cases run: 9/9, Passes: 56, Failures: 0, Exceptions: 0
+Done in 0.94203686714172 seconds
+
+Basically, CollectionTest and InjectorTest are kinda broken.
+
+> >  -> Another thing that I quite dont like is the implementation that
+> > you choose for Iterator/Collections in medick.util. It strange, and
+> > "it stinks"!
+>
+> Why do you think it sucks? I know it lacks some features and that the
+> implementation is a little bit strange:
+> accesing an element via $it->current(); before $it->next(); will cause
+> a php error probably.
+
+Well, lets say that the IIterator Interface is ok for the moment.
+I think it will be better if your Collection will implement the
+ArrayAccess interface from SPL.
+http://www.php.net/~helly/php/ext/spl/interfaceArrayAccess.html
+
+Wow, I saw this one now:
+> 5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+Why did you do that?
+You should keep the interface man, this is not a wise code-clean-up.
+Maybe later we will add PHPTAL or other type of template engine.
+
+interface ITemplate {
+
+  // common methods like assign or render.
+
+}
+
+abstract class AbstractTemplate extends Object implements ITemplate {
+
+  public static function factory($type) {
+
+    // load a template engine here.
+
+  }
+
+}
+
+class PHPTemplate extends AbstractTemplate {
+
+  // implement the methods.
+
+}
+
+
+From apanaitescu at gmail.com  Wed Jan  4 11:13:08 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Wed, 4 Jan 2006 12:13:08 +0200
+Subject: [Medick-devel] This month in Medick
+In-Reply-To: <4e6a12c10601040212i43b967co527b9419f957bfd6@mail.gmail.com>
+References: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+	 <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+	 <514f44140601031220p329a08c2o401214f8d3bd0b44@mail.gmail.com>
+	 <4e6a12c10601040212i43b967co527b9419f957bfd6@mail.gmail.com>
+Message-ID: <4e6a12c10601040213s692e4935jd5b781bb9ded4b4d@mail.gmail.com>
+
+Forgot to attach the test patch :D
+
+Please have a look.
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: unit-tests.txt
+URL: <https://lists.berlios.de/pipermail/medick-devel/attachments/20060104/e6fcefe3/attachment.txt>
+
+From oancea at gmail.com  Wed Jan  4 21:12:58 2006
+From: oancea at gmail.com (aurelian)
+Date: Wed, 4 Jan 2006 22:12:58 +0200
+Subject: [Medick-devel] This month in Medick
+In-Reply-To: <4e6a12c10601040212i43b967co527b9419f957bfd6@mail.gmail.com>
+References: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+	 <4e6a12c10601030851q4793c3f1n118e457ecaadb007@mail.gmail.com>
+	 <514f44140601031220p329a08c2o401214f8d3bd0b44@mail.gmail.com>
+	 <4e6a12c10601040212i43b967co527b9419f957bfd6@mail.gmail.com>
+Message-ID: <514f44140601041212s1e9d8a7aid66502a25263061a@mail.gmail.com>
+
+Hi Andrei,
+
+> SimpleTest is still vorking with php 5.0.5
+
+Oki, commited your patch [1]. I didnt have the time to test on php 5.1.1.
+
+> > I have 3 applications installed locally (one is the eltodo) and I
+> > browse them. If any wierd behavior is spotted I try to fix it. The
+> > other two applications:
+> > elproject (for testing ActiveRecord:::Asociations)
+> > depot (for session testing), somwhow similar with Rails depot application.
+>
+> Great, add them to the repository!
+
+Not yet.
+
+> Well, lets say that the IIterator Interface is ok for the moment.
+> I think it will be better if your Collection will implement the
+> ArrayAccess interface from SPL.
+> http://www.php.net/~helly/php/ext/spl/interfaceArrayAccess.html
+
+I will have a look. But until revision 280 I had the Collection class
+under repository, removed in 281 because I thought that is bloated[2].
+
+> Wow, I saw this one now:
+> > 5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+> Why did you do that?
+> You should keep the interface man, this is not a wise code-clean-up.
+> Maybe later we will add PHPTAL or other type of template engine.
+
+I will have a look here too and I will probably reconsider my change.
+
+> interface ITemplate {
+>
+>   // common methods like assign or render.
+>
+> }
+>
+> abstract class AbstractTemplate extends Object implements ITemplate {
+>
+>   public static function factory($type) {
+>
+>     // load a template engine here.
+>
+>   }
+>
+> }
+>
+> class PHPTemplate extends AbstractTemplate {
+>
+>   // implement the methods.
+>
+> }
+>
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Fri Jan  6 22:02:59 2006
+From: oancea at gmail.com (aurelian)
+Date: Fri, 6 Jan 2006 23:02:59 +0200
+Subject: [Medick-devel] before 0.0.4
+Message-ID: <514f44140601061302g4ebfe56eu7d8215de661459c6@mail.gmail.com>
+
+Hi,
+
+Before relese 0.0.4 the fallowing issues should be implemented:
+
+-> medick.util rewrite
+-> refactorings in ActiveRecordBase
+-> re-add interface/factory class on ActionViewBase
+
+Until now I have almost 600 line of code, including some trivial tests:
+http://29dots.com/code/medick.util.txt
+
+This will probably solve the first two issues on my list.
+
+If everything goes as expected, 0.0.4 will be released monday or
+tuesday, next week.
+
+First I will start to merge the code from medick.util.txt file into
+the repository.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sun Jan  8 19:41:46 2006
+From: oancea at gmail.com (aurelian)
+Date: Sun, 8 Jan 2006 20:41:46 +0200
+Subject: [Medick-devel] Version 0.0.4RC1 released
+Message-ID: <514f44140601081041i47394994ufcaed111cc6db494@mail.gmail.com>
+
+Hi,
+
+Please consider this relase as a relase candidate, medick 0.0.4RC1.
+Andrei, if everything works for you, it will become the final release.
+The tar-ball will be published after your OK.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From apanaitescu at gmail.com  Mon Jan  9 08:20:24 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 9 Jan 2006 09:20:24 +0200
+Subject: [Medick-devel] Version 0.0.4RC1 released
+In-Reply-To: <514f44140601081041i47394994ufcaed111cc6db494@mail.gmail.com>
+References: <514f44140601081041i47394994ufcaed111cc6db494@mail.gmail.com>
+Message-ID: <4e6a12c10601082320tc5692ffi4e118e773a81b7f2@mail.gmail.com>
+
+Hello Aurelian.
+
+As usual, I have been away from computer this weekend.
+First of all, you`ve did a great job and I aggree with you that 0.0.4
+is almost ready.
+
+But, by the power of unit-tests I`ve discovered some issues.
+- wrong method calls in ARAssociations and ARBase
+- Mutil, wrong Collection::isEmpty return value.
+- didnt understand the code from ActiveRecordBase::getUpdateSql, and reverted.
+
+The patch to solve those problems is attached.
+
+Anyway, I think on the 0.1.0 (or 0.0.5 as you said) we should focus on
+Unit testing, right now I think that only 10-15% of the framework is
+coverd by test cases.
+
+On 1/8/06, aurelian <oancea at gmail.com> wrote:
+> Hi,
+>
+> Please consider this relase as a relase candidate, medick 0.0.4RC1.
+> Andrei, if everything works for you, it will become the final release.
+> The tar-ball will be published after your OK.
+>
+> --
+> FastWork::There is no place like localhost
+> http://fastwork.locknet.ro
+> WSM::Windows Service Management
+> http://wsm.berlios.de/
+> _______________________________________________
+> Medick-devel mailing list
+> Medick-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/medick-devel
+>
+-------------- next part --------------
+Index: test/test/active/record/associations/HasOneTest.php
+===================================================================
+--- test/test/active/record/associations/HasOneTest.php	(revision 329)
++++ test/test/active/record/associations/HasOneTest.php	(working copy)
+@@ -37,7 +37,7 @@
+     public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+         
+         $author= new Author();
+         $author->name= 'Andrei Cristescu';
+Index: test/test/active/record/DBOperationsTest.php
+===================================================================
+--- test/test/active/record/DBOperationsTest.php	(revision 329)
++++ test/test/active/record/DBOperationsTest.php	(working copy)
+@@ -29,7 +29,7 @@
+     public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+     }
+     
+     /** tearDown */
+Index: test/test/active/record/FindTest.php
+===================================================================
+--- test/test/active/record/FindTest.php	(revision 329)
++++ test/test/active/record/FindTest.php	(working copy)
+@@ -32,7 +32,7 @@
+      public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+         $author= new Author();
+         $author->name= "Andrei Cristescu";
+         $author->email= "andrei.cristescu at foo-factory.info";
+Index: test/test/medick/CollectionTest.php
+===================================================================
+--- test/test/medick/CollectionTest.php	(revision 329)
++++ test/test/medick/CollectionTest.php	(working copy)
+@@ -23,8 +23,8 @@
+     }
+     
+     function testAdd() {
+-        // $f= $this->col->add(new Foo());
+-        // $this->assertEqual('Foo', $f->getClassName());
++        $f= $this->col->add(new Foo());
++        $this->assertEqual('Foo', $f->getClassName());
+     }
+     
+     function testEmpty() {
+@@ -33,10 +33,10 @@
+     }
+     
+     function testRemove() {
+-         // $f= new Foo();
+-         // $this->col->add($f);
+-         // $this->col->remove($f);
+-         // $this->assertTrue($this->col->isEmpty());
++         $f= new Foo();
++         $this->col->add($f);
++         $this->col->remove($f);
++         $this->assertTrue($this->col->isEmpty());
+     }
+     
+     function testSize() {
+@@ -58,10 +58,10 @@
+     }
+ 
+     function testArray() {
+-        // $this->col[] = new Foo();
+-        // $this->col[] = new Bar();
+-        // $this->col[] = new Baz();
+-        // $this->assertEqual($this->col->size(), 3);
++        $this->col[] = new Foo();
++        $this->col[] = new Bar();
++        $this->col[] = new Baz();
++         $this->assertEqual($this->col->size(), 3);
+     }
+ 
+     function testOffsetExists() {
+@@ -70,9 +70,9 @@
+    }
+ 
+    function testContains() {
+-       // $f= new Foo();
+-       // $this->col[] = $f;
+-       // $this->assertTrue($this->col->contains($f)); 
++       $f= new Foo();
++       $this->col[] = $f;
++       $this->assertTrue($this->col->contains($f)); 
+    }
+ 
+ }
+Index: test/application/models/book.php
+===================================================================
+--- test/application/models/book.php	(revision 329)
++++ test/application/models/book.php	(working copy)
+@@ -9,9 +9,8 @@
+     protected $has_one= array('author');
+     
+     public static function find() {
+-        $args= func_get_args();
+-        self::setTable(__CLASS__);
+-        return self::__find($args);
++        ActiveRecordBase::initialize(__CLASS__);
++        return ActiveRecordBase::__find(func_get_args());
+     }
+ 
+ }
+Index: test/application/models/author.php
+===================================================================
+--- test/application/models/author.php	(revision 329)
++++ test/application/models/author.php	(working copy)
+@@ -6,9 +6,8 @@
+ 
+ class Author extends ActiveRecordBase {
+     public static function find() {
+-        $args= func_get_args();
+-        self::setTable(__CLASS__);
+-        return self::__find($args);
++        ActiveRecordBase::initialize(__CLASS__);
++        return ActiveRecordBase::__find(func_get_args());
+     }
+ }
+ 
+Index: test/mock/MockCollection.php
+===================================================================
+--- test/mock/MockCollection.php	(revision 329)
++++ test/mock/MockCollection.php	(working copy)
+@@ -2,7 +2,7 @@
+ 
+ // $Id$
+     
+-    class MockCollection extends AbstractCollection {
++    class MockCollection extends Collection {
+     
+     }
+ 
+Index: libs/active/record/Base.php
+===================================================================
+--- libs/active/record/Base.php	(revision 329)
++++ libs/active/record/Base.php	(working copy)
+@@ -437,15 +437,15 @@
+     private function getUpdateSql() {
+         $sqlSnippet = '';
+         if ($this->pk !== NULL) {
+-            $sqlSnippet = ' WHERE ' . $this->pk . ' = ' . $this->fields->getPrimaryKey()->getValue();
++            $sqlSnippet = ' WHERE ' . $this->pk . ' = ' . $this->row->getPrimaryKey()->getValue();
+         }
+         $sql  = 'UPDATE ' . ActiveRecordBase::$table_name . ' SET ';
+-        $sql .= implode(' = ?, ', $this->row->getAffectedFieldsNames());
+-        /*
+-        foreach($this->fields->getAffectedFields() as $field) {
++        // $sql .= implode(' = ?, ', $this->row->getAffectedFieldsNames());
++        
++        foreach($this->row->getAffectedFields() as $field) {
+             $sql .= $field->getName() . ' = ?, ';
+         }
+-        */
++        
+         return substr($sql, 0, -2) . $sqlSnippet;
+     }
+ 
+Index: libs/active/record/Association.php
+===================================================================
+--- libs/active/record/Association.php	(revision 329)
++++ libs/active/record/Association.php	(working copy)
+@@ -178,11 +178,13 @@
+      * @see Association#execute
+      */
+     public function execute() {
+-        $fk= $this->class.'_id';
+-        for($it = $this->fields->getIterator(); $it->valid(); $it->next()) {
+-            if ( $it->current()->getName() == $fk ) {
++        $fk= $this->class.'_id'; // foreign key name: the class name+"_id" suffix"
++        $it= $this->fields->iterator();
++        while($it->hasNext()) {
++            $current= $it->next();
++            if ($current->getName() == $fk) {
+                 $this->pre_execution();
+-                $ret= ActiveRecordBase::__find(array($it->current()->getValue()));
++                $ret= ActiveRecordBase::__find(array($current->getValue()));
+                 $this->post_execution();
+                 return $ret;
+             }
+Index: libs/medick/util.php
+===================================================================
+--- libs/medick/util.php	(revision 329)
++++ libs/medick/util.php	(working copy)
+@@ -277,7 +277,7 @@
+      * @return bool, TRUE if the Collection is empty
+      */
+     public function isEmpty() {
+-        return $this->size() > 0;
++        return $this->size() == 0;
+     }
+ 
+     /**
+
+
+From apanaitescu at gmail.com  Mon Jan  9 09:04:47 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 9 Jan 2006 10:04:47 +0200
+Subject: [Medick-devel] Roadmap to 0.1.0
+In-Reply-To: <514f44140601031256u34751715mff82ca9c661d4568@mail.gmail.com>
+References: <514f44140601031256u34751715mff82ca9c661d4568@mail.gmail.com>
+Message-ID: <4e6a12c10601090004r4fd9c9e2u8696a884fdd60b42@mail.gmail.com>
+
+Hi Aurelian.
+
+Some thoughts on Routing System.
+
+On 1/3/06, aurelian wrote:
+
+> v 0.0.5
+> ----------
+> release date 2.February, max 16 February.
+>   -> more work on Routing system.
+
+In ActionControllerRouting::findRoute(Request $request), the iteration
+should be moved in to Map::match(Request $request).
+
+return Map::getInstace()->match($request).
+
+createControllerInstance method should be moved into Route.
+
+well, that`s all for now :)
+
+back to work.
+
+
+From oancea at gmail.com  Thu Jan 12 09:51:19 2006
+From: oancea at gmail.com (aurelian)
+Date: Thu, 12 Jan 2006 10:51:19 +0200
+Subject: [Medick-devel] medick-0.0.4 released
+Message-ID: <514f44140601120051u3a70c0d2l6dae66d636c65935@mail.gmail.com>
+
+Hello,
+
+Today I have uploaded the tar-ball with medick-0.0.4 on the web site[1].
+
+Changelog[2]:
+========
+    - added medick application generator (bin/medick.php).
+    - re-wrote scripts/generator.php, will create dummy files
+(controllers with associated views and models)
+    - added medick.util, base package for medick collections.
+    - rewrite the Routing System (more like RoR), it`s not completly
+done (20%), but we have a nice working version.
+    - minor refactorings in ActiveRecordBase
+    - code improvements in Logger:
+        - removed heavy back trace witch was attached to every Logging Events.
+        - new Configuration Options, every Outputter can have properties.
+    - removed un-used application_path from configuration options.
+    - removed deprecated methods from the framework.
+
+Release Notes:
+===========
+This is the last release under the pre-alpha stage.
+We (me & andrei) put a lot of time into this, but as promised when I
+launched this project for public in June 2005, in February this year,
+we will go on alpha stage, meaning that the framework will work as
+expected and it will be useful for creating (medium/small) web sites
+quickly.
+Even that we still have a lot of work to do, I think that as it is at
+this version 0.0.4, the framework is still usable. To prove this, on
+the next weeks, I will work (max 10H-15H/week) for creating the first
+public web site with medick. As already announced, It will be the
+fastwork web site.
+Of course, during the development on this web site, I will find many
+missing features or many problems in the framework. As they will be
+discovered, I will fix them, making medick more stable for an alpha
+stage.
+
+Well, until then, happy coding.
+
+--
+aurelian
+
+[1] http://medick.locknet.ro
+[2] http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&rev=0&sc=0
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+Medick::The framework
+http://medick.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Mon Jan 16 09:19:03 2006
+From: oancea at gmail.com (aurelian)
+Date: Mon, 16 Jan 2006 10:19:03 +0200
+Subject: [Medick-devel] New Features added for 0.1.0
+Message-ID: <514f44140601160019l38273f99i54ea2ad4b12cbba4@mail.gmail.com>
+
+Hi,
+
+I`ve been very active in the last weekend and I have added some new
+and cool features to medick.
+
+Here they are:
+
+1. The "Flash" thing.
+================
+See: http://api.rubyonrails.com/classes/ActionController/Flash.html
+for details and a brief explanation.
+
+Back to medick, now you can write:
+
+<?php
+// controller
+class NewsController extends ActionControllerBase {
+
+   // list all the news
+   public function index() {
+
+   }
+
+  // print the form for adding a news
+  public function add()  {
+
+  }
+
+  // creates a news:
+  public function create() {
+     $news= new News();
+     [...]
+     try {
+        $news->save();
+        $this->flash('notice', 'News added');
+        $this->redirect_to('index');
+     } catch (Exception $ex) {
+        $this->flash('error', 'Cannot add a news, ' . $ex->getMessage());
+        $this->render('add');
+  }
+}
+?>
+
+// view:
+// news/index.phtml
+[...]
+<? if(isset($flash['notice'])): ?>
+<?=$flash['notice'];?>
+<? endif; ?>
+[...]
+
+2. Start to work on ActiveRecord validations
+==================================
+This is somehow related with feature 3 (see bellow).
+See: http://api.rubyonrails.com/classes/ActiveRecord/Validations.html
+for details.
+
+Basically, you can use a base set of validations (I will think of a
+way to extend them) in ActiveRecordBase now. Right now only it works
+by adding calls to validates() method in before* filters.
+A failure will generate a ValidationException, not catched by the
+framework, so it will end up in the userland.
+A hash of errors are added to the Field object, this way, the use can
+display all the errors associated with a field.
+
+some code:
+
+<?php
+// model
+class News extends ActiveRecordBase {
+
+    public function before_save()  {
+        $this->validates()->presence_of('title', 'body');
+        $this->validates()->uniqueness_of('clean_title');
+    }
+
+    [....]
+
+}
+
+3. ActionView helpers
+=================
+This includes the addition of two classes ,
+at this point in Action/View/HTML.php, will be moved to
+Action/View/helpers/*.* :
+
+* ActiveRecordHelper
+See: http://api.rubyonrails.com/classes/ActionView/Helpers/ActiveRecordHelper.html
+for details.
+At this point, this class is the bridge between ActiveRecord
+Validations and the views.
+* FormHelper
+See: http://api.rubyonrails.com/classes/ActionView/Helpers/FormHelper.html
+for details
+
+code:
+<?php
+//
+// controller
+class NewsController extends ActionControllerBase {
+
+   // list all the news
+   public function index() {
+      $this->template->news= News::find();
+   }
+
+  // print the form for adding a news
+  public function add()  {
+      $this->template->news= new News();
+  }
+
+  // creates a news:
+  public function create() {
+     $this->template->news= new News($this->request->getParameter('news'));
+     [...]
+     try {
+        $this->template->news->save();
+        $this->flash('notice', 'News added');
+        $this->redirect_to('index');
+     } catch (Exception $ex) {
+        $this->flash('error', 'Cannot add a news, ' . $ex->getMessage());
+        $this->render('add');
+  }
+}
+?>
+
+// in template news/add.phtml
+<?=ActiveRecordBase::error_messages_for($news);?>
+<form action[....]
+
+<?=FormHelper::text_field($news, 'title');?>
+<?=FormHelper::text_area($news, 'body');?>
+<?=FormHelper::check_box($news, 'allow_comments');?>
+[...]
+
+</form>
+
+4. Bundled scriptaculous with prototype
+===============================
+This javascripts libraries have been bundled into medick.
+See the documentation for usage,
+http://wiki.script.aculo.us/scriptaculous/show/HomePage
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Everything is yet on a pre-stage, and is the subject of change.
+More methods will be added (for 2 and 3 for sure) as what we provide
+is yet unfinished.
+
+Anyway, as usually I expect your feedback on this, and andrei make
+sure the tests are still working :)
+
+Best Regards,
+Aurelian Oancea.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sun Feb  5 16:07:53 2006
+From: oancea at gmail.com (aurelian)
+Date: Sun, 5 Feb 2006 17:07:53 +0200
+Subject: [Medick-devel] Fwd: [Medick-svn] r344
+Message-ID: <514f44140602050707u6f09a3e8q9a9ec88838f041fa@mail.gmail.com>
+
+Hello,
+
+As usual major code changes:
+core classes renamed and new find method signature.
+
+Truncated, the svn commit log & diff.
+
+Date: Feb 5, 2006 4:58 PM
+Subject: [Medick-svn] r344 - applications/eltodo/app/controllers
+applications/eltodo/app/views/layouts
+applications/eltodo/app/views/project
+applications/eltodo/public/stylesheet trunk
+trunk/libs/action/controller trunk/libs/action/view
+trunk/libs/active/record trunk/libs/active/support
+trunk/libs/creole/drivers/oracle trunk/libs/logger
+trunk/libs/logger/formatter trunk/libs/medick
+
+Author: aurelian
+Date: 2006-02-05 15:58:35 +0100 (Sun, 05 Feb 2006)
+New Revision: 344
+
+Added:
+   trunk/libs/active/record/SQLCommand.php
+Modified:
+   applications/eltodo/app/controllers/project_controller.php
+   applications/eltodo/app/views/layouts/eltodo.phtml
+   applications/eltodo/app/views/project/all.phtml
+   applications/eltodo/public/stylesheet/eltodo.v0.2.css
+   trunk/CHANGELOG
+   trunk/boot.php
+   trunk/libs/action/controller/Base.php
+   trunk/libs/action/controller/Injector.php
+   trunk/libs/action/controller/Request.php
+   trunk/libs/action/controller/Route.php
+   trunk/libs/action/view/Base.php
+   trunk/libs/action/view/HTML.php
+   trunk/libs/active/record/Association.php
+   trunk/libs/active/record/Base.php
+   trunk/libs/active/record/DatabaseRow.php
+   trunk/libs/active/record/QueryBuilder.php
+   trunk/libs/active/record/RowsAggregate.php
+   trunk/libs/active/record/Validator.php
+   trunk/libs/active/support/Inflector.php
+   trunk/libs/creole/drivers/oracle/OCI8PreparedStatement.php
+   trunk/libs/logger/Logger.php
+   trunk/libs/logger/formatter/Formatter.php
+   trunk/libs/medick/Dispatcher.php
+   trunk/libs/medick/ErrorHandler.php
+   trunk/libs/medick/Exception.php
+Log:
+ -- renamed ActionViewBase to ActionView,
+ -- renamed ActionControllerBase to ActionController
+ -- renamed ActiveRecordBase to ActiveRecord
+ -- 3-rd version of ActiveRecord::find() method,
+    this time the user model classes find method should be written as:
+    class News extends ActiveRecord{
+        public static function find() {
+            $args= func_get_args();
+            return ActiveRecord::build(new QueryBuilder(__CLASS__, $args));
+        }
+    }
+ -- re-wrote QueryBuilder, this time it knows how to build sqlquery`s
+from an array of options
+ -- added SQLCommand class (more API on request!)
+ -- on logger, the full path to application is replaced with the name
+of the application.
+ -- removed some debugging infos
+
+
+Modified: trunk/CHANGELOG
+===================================================================
+--- trunk/CHANGELOG     2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/CHANGELOG     2006-02-05 14:58:35 UTC (rev 344)
+@@ -2,6 +2,28 @@
+ (*) SVN version
+
+ 0.0.5(*)
++    - Renamed ActionViewBase to ActionView, ActionControllerBase to
+ActionController and ActiveRecordBase to ActiveRecord
++    - 3-rd version of ActiveRecord::find() method, this time the user
+model classes find method should be written as:
++      class News extends ActiveRecord{
++        public static function find() {
++          $args= func_get_args();
++          return ActiveRecord::build(new QueryBuilder(__CLASS__, $args));
++        }
++      }
++    - re-wrote QueryBuilder, this time it knows how to build
+sqlquery`s from an array of options
++    - added SQLCommand class (more API on request!)
++    - added Validators (more API will be provided on request!)
++    - ActiveRecord filters should return TRUE
++        and the size of errors associated with a databaserow should
+be 0 (no errors),
++        otherwise changing an object state will fail
++    - added the "flash" thing
++    - added ActiveRecordHelper and FormHelper classes on
+ActionView:::HTML namespace
++    - added 3 new methods on Inflector: sanitize, tabelize() and humanize()
++    - on logger, the full path to application is replaced with the
+name of the application.
++    - removed some debugging infos
++    - more API docs.
++    - bundled prototype (http://prototype.conio.net/)
++      and script.aculo.us (http://script.aculo.us/) javascript
+libraries, both under a MIT-style licence.
+
+ 0.0.4 (09.Jan.2006)
+     - added medick application generator (bin/medick.php).
+
+Modified: trunk/boot.php
+===================================================================
+--- trunk/boot.php      2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/boot.php      2006-02-05 14:58:35 UTC (rev 344)
+@@ -70,9 +70,8 @@
+
+ $logger= Registry::put(new Logger(), '__logger');
+
+-$logger->debug('Core Loaded...');
+-$logger->debug('Running on Medick $v: ' . Version::getVersion());
+-$logger->debug('XML Config File: ' . $conf_files . '.xml');
+-$logger->debug('Routes File: ' . $conf_files . '.routes.php');
+-
++$logger->debug('Medick $v: ' . Version::getVersion());
++$logger->debug('Config: ' . $conf_files . '.xml');
++$logger->debug('Routes: ' . $conf_files . '.routes.php');
+ include_once($conf_files . '.routes.php');
++
+
+Modified: trunk/libs/action/controller/Base.php
+===================================================================
+--- trunk/libs/action/controller/Base.php       2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/action/controller/Base.php       2006-02-05 14:58:35
+UTC (rev 344)
+@@ -37,10 +37,11 @@
+ // namespace ActionController {
+
+ /**
++ * Base Class For Our Application Controllers
++ *
+  * @package locknet7.action.controller
+- * Base Class For Our Application Controllers
+  */
+-class ActionControllerBase extends Object {
++class ActionController extends Object {
+
+     /** @var Logger
+         logger instance */
+@@ -68,15 +69,15 @@
+
+     /** @var array
+         values for template class */
+-    protected $assigns;
++    private $assigns;
+
+     /** @var string
+         Default location for template files*/
+-    protected $template_root;
++    private $template_root;
+
+     /** @var string
+         application path*/
+-    protected $app_path;
++    private $app_path;
+
+     /** @var string
+         the layout to use */
+@@ -106,8 +107,6 @@
+         the injector. */
+     private $injector;
+
+-    // private $__flash=array();
+-
+     /**
+      * Process this Request
+      *
+@@ -124,8 +123,7 @@
+         if(ob_get_length()) {
+             ob_end_clean();
+         }
+-        $template = ActionViewBase::factory('php');
+-        // $template = new ActionView:::Base();
++        $template = ActionView::factory('php');
+         $template->error= $exception;
+         $text= $template->render_file(MEDICK_PATH .
+'/libs/action/controller/templates/error.phtml');
+         $response->setStatus(Response::SC_INTERNAL_SERVER_ERROR);
+@@ -197,16 +195,11 @@
+                 . $this->injector->getPath('helpers')
+                 . '_' . $this->params['controller'] . ' ' .
+$fnfEx->getMessage());
+         }
+-
+-        if ($this->session->hasValue('flash')) {
+-            $this->template->flash = $this->session->getValue('flash');
+-        } else {
+-            $this->template->flash = NULL;
+-        }
++        $this->register_flash();
+         if ($this->use_layout) {
+             $layout= $this->use_layout === TRUE ?
+$this->params['controller'] : $this->use_layout;
+             $layout_file= $this->injector->getPath('layouts') .
+$layout . '.phtml';
+-            $this->logger->debug('Trying to use layout: ' . $layout_file);
++            $this->logger->debug('Layout: ' . $layout_file);
+             if (!is_file($layout_file)) {
+                 $this->logger->debug('...failed.');
+                 return $this->render_without_layout($template_file, $status);
+@@ -218,19 +211,14 @@
+         } else {
+             return $this->render_without_layout($template_file, $status);
+         }
++    }
+
+-        /*
+-        // {{{ hook RouteParams here.
+-        $hij= array();
+-        $route= Registry::get('__map')->getCurrentRoute();
+-        foreach($route->getParams() as $param) {
+-            $hij[$param->getName()]['message'] = 'foo';
+-            $hij[$param->getName()]['value']   = $param->getValue();
+-        }
+-        $this->template->__param = $hij;
+-        // }}}
+-        */
+-
++    protected function render_partial($partial, $controller=NULL,
+$status=NULL) {
++        $this->register_flash();
++        if (is_null($controller)) $location = $this->template_root;
++        else $location = $this->injector->getPath('views') .
+$controller . DIRECTORY_SEPARATOR;
++        // $this->logger->debug('Partial: ' . $location . '_' .
+$partial . '.phtml');
++        return $this->render_without_layout($location . '_' .
+$partial . '.phtml', $status);
+     }
+
+     protected function render_without_layout($template_file, $status) {
+@@ -255,8 +243,6 @@
+             return;
+         }
+         $status = $status === NULL ? Response::SC_OK : $status;
+-        // try to load the magick __common method.
+-
+         $this->response->setStatus($status);
+         $this->response->setContent($text);
+         $this->action_performed = TRUE;
+@@ -265,12 +251,19 @@
+         if ($this->session->hasValue('flash')) {
+             $this->session->removeValue('flash');
+         }
+-
+     }
+
+     // }}}
+
+-    protected final function flash($name, $value) {
++    private function register_flash() {
++        if ($this->session->hasValue('flash')) {
++            $this->template->assign('flash',
+$this->session->getValue('flash'));
++        } else {
++            $this->template->assign('flash', NULL);
++        }
++    }
++
++    protected function flash($name, $value) {
+         $this->session->putValue('flash', array($name=>$value));
+     }
+
+@@ -294,13 +287,25 @@
+         $this->app_path      = $this->injector->getPath('__base');
+         $this->template_root = $this->injector->getPath('views') .
+$this->params['controller'] . DIRECTORY_SEPARATOR;
+
+-        $this->template = ActionViewBase::factory('php');
+-        // $this->template = new ActionView:::Base();
++        $this->template = ActionView::factory('php');
+         // predefined variables:
+-        $this->template->__base   =
+$this->config->getProperty('document_root');
+-        $this->template->__server = $this->config->getProperty('server_name');
++        $this->template->assign('__base',
+$this->config->getProperty('document_root'));
++        $this->template->assign('__server',
+$this->config->getProperty('server_name'));
++        $this->template->assign('__controller', $this->params['controller']);
++        $this->logger->debug($this->request->toString());
+     }
+
++    /**
++     * Shortcut for template assigns
++     */
++    public function __set($name, $value) {
++        $this->template->assign($name, $value);
++    }
++
++    public function __get($name) {
++        return $this->template->$name;
++    }
++
+     // XXX: not-done!
+     protected function sendFile($location, $options = array()) {
+         if(!is_file($location)) {
+@@ -312,23 +317,28 @@
+
+     // {{{ redirects
+
+-    // XXX: not done.
++    /**
++     * Redirects the current Response
++     *
++     * This changes the flag of action performed to TRUE
++     * @param string action to redirect to
++     * @param string controller defaults to NULL, the current controller
++     * @param array params, additional parameters to pass with this redirect.
++     */
+     protected function redirect_to($action, $controller= NULL,
+$params = array()) {
+         // get the curent controller, if NULL is passed.
+-        if (is_null($controller)) $controller= $this->params['controller'];
+-
+-        if ($this->config->getProperty('rewrite')) {
+-            $this->response->redirect(
+-                $this->config->getProperty('server_name') .
+$this->config->getProperty('document_root') . '/' .
+-                $controller . '/' . $action . '.html');
+-        } else {
+-            // rewrite-off
+-            $this->response->redirect(
+-                $this->config->getProperty('server_name') .
+-                $this->config->getProperty('document_root') .
+-                '/index.php?controller=' . $controller . '&action=' . $action
+-            );
++        if (is_null($controller)) {
++            $controller= $this->params['controller'];
+         }
++        $redirect_to= $this->config->getProperty('server_name') .
+$this->config->getProperty('document_root') . '/';
++        if (!$this->config->getProperty('rewrite')) {
++            $redirect_to .= 'index.php/';
++        }
++        $redirect_to .= $controller . '/' . $action;
++        if (count($params)) $redirect_to .= '/' . implode('/', $params);
++        $redirect_to .= '.html';
++        $this->logger->debug('Redirecting to: ' . $redirect_to);
++        $this->response->redirect($redirect_to);
+         $this->action_performed = TRUE;
+     }
+
+@@ -347,6 +357,7 @@
+      * Also, the magic __common method is invoked.
+      * @param string, action_name, the action to perform
+      * TODO: still to refactor.
++     * TODO: do not try to create the ``index" method, just throw an error.
+      */
+     private function perform_action($action_name) {
+         $forbidden_actions = array('process', '__construct',
+'__destruct', '__common');
+@@ -369,7 +380,7 @@
+             }
+         }
+         $this->params['action'] = strtolower($action_name);
+-        $this->logger->debug('Incoming action:: ' . strtolower($action_name));
++        // $this->logger->debug('Action:: ' . strtolower($action_name));
+         // quickly load the common magick method.
+         if ($_common= $this->createMethod('__common')) {
+             $_common->invoke($this);
+@@ -434,7 +445,6 @@
+         }
+         foreach ($this->models as $model) {
+             if ( trim($model) != '' ) {
+-                $this->logger->debug('Injecting Model:: ' . $model);
+                 $this->injector->inject('model', trim($model));
+             }
+         }
+
+Modified: trunk/libs/action/controller/Injector.php
+===================================================================
+--- trunk/libs/action/controller/Injector.php   2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/action/controller/Injector.php   2006-02-05 14:58:35
+UTC (rev 344)
+@@ -38,6 +38,7 @@
+  * Solves dependencys, by including application specific files
+  * controllers, models, layout files.
+  * Aditional using php reflection api, it validates the user classes
++ *
+  * @package locknet7.action.controller
+  */
+
+@@ -123,16 +124,15 @@
+      */
+     protected function injectModel($name) {
+         $location= $this->path['models'] . $name . '.php';
+-        $this->logger->debug('Model Location:: ' . $location);
++        $this->logger->debug('Model: ' . $location);
+         $this->includeFile($location, ucfirst($name));
+         $model_class_name= Inflector::camelize($name);
+-        $this->logger->debug('Model Class Name:: ' . $model_class_name);
+         try {
+             $model_object = new ReflectionClass($model_class_name);
+
+-            if (@$model_object->getParentClass()->name != 'ActiveRecordBase') {
++            if (@$model_object->getParentClass()->name != 'ActiveRecord') {
+                 throw new InjectorException (
+-                    'Wrong Definition of user Model, `' .
+$model_class_name . '`, it must extend ActiveRecordBase object!');
++                    'Wrong Definition of user Model, `' .
+$model_class_name . '`, it must extend ActiveRecord object!');
+             }
+
+             // if (!$model_object->hasMethod('find')) { XXX. php 5.1 only.
+@@ -178,7 +178,7 @@
+                 (
+                     (@$controller_class->getParentClass()->name ==
+'ApplicationController')
+                     ||
+-                    (@$controller_class->getParentClass()->name ==
+'ActionControllerBase')
++                    (@$controller_class->getParentClass()->name ==
+'ActionController')
+                 )
+             )
+             {
+@@ -186,7 +186,7 @@
+             } else {
+                 throw new InjectorException (
+                     'Wrong Definition of user controller class,
+-                    `' . $clazz . '` must extend
+ApplicationController or ActionControllerBase and
++                    `' . $clazz . '` must extend
+ApplicationController or ActionController and
+                     should be instantiable (must have a public constructor)!');
+             }
+         } catch (ReflectionException $rEx) {
+@@ -204,7 +204,7 @@
+      */
+     protected function injectHelper($location) {
+         $helper_file= $this->path['helpers'] . $location . '_helper.php';
+-        $this->logger->debug('Trying to load user helper from: ' .
+$helper_file);
++        $this->logger->debug('Helper: ' . $helper_file);
+         return $this->includeFile($helper_file, $location . '_helper.php');
+     }
+
+
+Modified: trunk/libs/action/controller/Request.php
+===================================================================
+--- trunk/libs/action/controller/Request.php    2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/action/controller/Request.php    2006-02-05 14:58:35
+UTC (rev 344)
+@@ -78,5 +78,19 @@
+     public function setParameter($name, $value) {
+         $this->params[$name] = $value;
+     }
++
++    /**
++     * Gets a string representation of this Object
++     *
++     * @return string
++     */
++    public function toString() {
++        $buff = "{".$this->getClassName()."}-->";
++        foreach ($this->getParameters() as $name=>$value) {
++            $buff .= "[{$name}={$value}]";
++        }
++        return $buff;
++    }
++
+ }
+
+
+Modified: trunk/libs/action/controller/Route.php
+===================================================================
+--- trunk/libs/action/controller/Route.php      2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/action/controller/Route.php      2006-02-05 14:58:35
+UTC (rev 344)
+@@ -217,3 +217,4 @@
+     }
+
+ }
++
+
+Modified: trunk/libs/action/view/Base.php
+===================================================================
+--- trunk/libs/action/view/Base.php     2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/action/view/Base.php     2006-02-05 14:58:35 UTC (rev 344)
+@@ -32,20 +32,21 @@
+ // ///////////////////////////////////////////////////////////////////////////////
+ // }}}
+
++include_once('action/view/HTML.php');
++
+ /**
+- * @package locknet7.action.view.base
++ * @package locknet7.action.view
+  */
+
+-include_once('action/view/HTML.php');
+-
+ // namespace ActionView {
+
+ interface ITemplateEngine {
++    public function render_partial($controller, $partial);
+     public function render($template_file);
+     public function assign($name, $value);
+ }
+
+-class ActionViewBase extends Object {
++class ActionView extends Object {
+
+     public static function factory($engine) {
+         return new PHPTemplateEngine();
+@@ -61,7 +62,7 @@
+      */
+     public static function stripslashes_deep($value) {
+         if (is_array($value)) {
+-            array_map(array('ActionViewBase','stripslashes_deep'), $value);
++            array_map(array('ActionView','stripslashes_deep'), $value);
+         } elseif (is_object($value)) {
+
+         } else {
+@@ -72,7 +73,7 @@
+ }
+
+ /**
+- * ActionViewBase is the default `Template Engine' for Medick Framwork.
++ * A ``PHPTemplateEngine" is the default `Template Engine' for Medick Framwork.
+  *
+  * For a smoother transaction from <tt>Smarty</tt>, some variabiles/methods
+  * may share the same name and behavior
+@@ -85,6 +86,17 @@
+         return $this->render($template_file);
+     }
+
++    public function render_partial($controller, $partial) {
++        $path= Registry::get('__injector')->getPath('views');
++        if (NULL === $controller) {
++            $path .= $this->__controller;
++        } else {
++            $path .= $controller;
++        }
++        $path .= DIRECTORY_SEPARATOR . '_' . $partial . '.phtml';
++        return $this->render($path);
++    }
++
+     /**
+      * Render the file
+      * @param string, file, the file to render.
+@@ -92,9 +104,11 @@
+      * @throws Exception if the file is wrong.
+      */
+     public function render($file) {
+-        if (!is_file($file)) throw new MedickException ('Cannot Find
+Template: ' . $file);
++        if (!is_file($file)) {
++            throw new FileNotFoundException ('Cannot Find Template: ' . $file);
++        }
+         if (!empty($this->vars)) {
+-            if(!get_magic_quotes_gpc()) $this->vars =
+ActionViewBase::stripslashes_deep($this->vars);
++            if(!get_magic_quotes_gpc()) $this->vars =
+ActionView::stripslashes_deep($this->vars);
+             extract($this->vars,EXTR_SKIP);
+         }
+         ob_start();
+@@ -139,3 +153,4 @@
+ }
+
+ // }
++
+
+Modified: trunk/libs/action/view/HTML.php
+===================================================================
+--- trunk/libs/action/view/HTML.php     2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/action/view/HTML.php     2006-02-05 14:58:35 UTC (rev 344)
+@@ -35,7 +35,7 @@
+
+ class ActiveRecordHelper extends Object {
+
+-    public static function error_messages_for(ActiveRecordBase
+$object, $options=array()) {
++    public static function error_messages_for(ActiveRecord $object,
+$options=array()) {
+         $css_class= isset($options['css_class']) ?
+$options['css_class'] : 'formErrors';
+         $heading  = isset($options['heading']) &&
+(int)$options['heading'] > 0 && (int)$options['heading'] < 6 ?
+$options['heading'] : 2;
+         $buffer= '<div id="medickFormErrors" class="' . $css_class . '">';
+@@ -63,7 +63,7 @@
+         }
+     }
+
+-    public static function error_message_on(ActiveRecordBase $object,
+$method, $options=array()) {
++    public static function error_message_on(ActiveRecord $object,
+$method, $options=array()) {
+         // $prepend_text = isset($options['prepend']) ?
+$options['prepend'] : "";
+         // $append_text  = isset($options['append']) ? $options['append'] : "";
+         // $css_class    = isset($options['css_class']) ?
+$options['css_class'] : "formError";
+@@ -76,7 +76,7 @@
+
+ class FormHelper extends Object {
+
+-    public static function text_field(ActiveRecordBase $object,
+$method, $options = array()) {
++    public static function text_field(ActiveRecord $object, $method,
+$options = array()) {
+         if (!$field= $object->getRow()->getFieldByName($method)) {
+             return; // ex?
+         }
+@@ -104,7 +104,7 @@
+         return $buff . "</div>";
+     }
+
+-    public static function text_area(ActiveRecordBase $object,
+$method, $options=array()) {
++    public static function text_area(ActiveRecord $object, $method,
+$options=array()) {
+         if (!$field= $object->getRow()->getFieldByName($method)) {
+             return; // ex?
+         }
+@@ -135,9 +135,20 @@
+             $options = array(),
+             $checked_value = "1",
+             $unchecked_value = "0") {
+-        $buff = '<input type="checkbox" id="';
+-        $buff .= strtolower(get_class($object)) . '_'.$method.'" ';
+-        $buff .= 'name="'.strtolower(get_class($object)).'['.$method.']" ';
++
++        if (!$field= $object->getRow()->getFieldByName($method)) {
++            return; // ex?
++        }
++        $id   = strtolower(get_class($object)) . '_'.$method;
++        $name = strtolower(get_class($object)).'['.$method.']';
++        $buff = "<div class=\"formRow\">\n<label for=\"" . $id .
+"\">" . $field->getFormattedName() . "</label><br />\n";
++        $errors= FALSE;
++        if($field->hasErrors()) {
++            $buff .= '<div class="fieldWithErrors">';
++            $errors= TRUE;
++        }
++
++        $buff .= '<input type="checkbox" id="' . $id . '" name="' .
+$name . '" ';
+         foreach ($options as $key=>$value) {
+             $buff .= $key . '="'.$value.'" ';
+         }
+
+Modified: trunk/libs/active/record/Association.php
+===================================================================
+--- trunk/libs/active/record/Association.php    2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/Association.php    2006-02-05 14:58:35
+UTC (rev 344)
+@@ -34,6 +34,7 @@
+
+ /**
+  * Association base abstract class
++ *
+  * @package locknet7.active.record
+  */
+ abstract class Association extends Object {
+@@ -68,27 +69,7 @@
+
+     /** execute function */
+     abstract public function execute();
+-
+-    /** */
+-    protected function pre_execution() {
+-        return $this->reload($this->class);
+-    }
+-
+-    /** */
+-    protected function post_execution() {
+-        return $this->reload($this->owner);
+-    }
+-
+-    private function reload($what) {
+-        if ($this->getClassName() == 'HasAndBelongsToManyAssociation'
+-             || $this->getClassName() == 'HasManyAssociation'
+-        ) {
+-            return ActiveRecordBase::initialize(Inflector::singularize($what));
+-        } else {
+-            return ActiveRecordBase::initialize($what);
+-        }
+-    }
+-
++
+     /**
+      * Resolves this Association
+      *
+@@ -149,12 +130,10 @@
+ class HasManyAssociation extends Association {
+
+     public function execute() {
+-        $this->class = Inflector::singularize($this->class);
+-        $this->pre_execution();
+-        $ret = ActiveRecordBase::__find(array(
+-               
+array('condition'=>Inflector::singularize($this->owner) . '_id=' .
+$this->pk)));
+-        $this->post_execution();
+-        return $ret;
++        $fk= Inflector::singularize($this->owner) . '_id';
++        $arguments= array('all', array('condition'=>$fk.'=?'),
+array($this->pk));
++        $builder= new
+QueryBuilder(Inflector::singularize($this->class), $arguments);
++        return ActiveRecord::build($builder);
+     }
+
+ }
+@@ -177,19 +156,17 @@
+
+     /**
+      * It Executes this Association
++     *
++     * @todo: what if we don`t find the field?
+      * @see Association#execute
+      */
+     public function execute() {
+         $fk= $this->class.'_id'; // foreign key name: the class
+name+"_id" suffix"
+-        $it= $this->fields->iterator();
+-        while($it->hasNext()) {
+-            $current= $it->next();
+-            if ($current->getName() == $fk) {
+-                $this->pre_execution();
+-                $ret= ActiveRecordBase::__find(array($current->getValue()));
+-                $this->post_execution();
+-                return $ret;
+-            }
++        if ($field= $this->fields->getFieldByName($fk)) {
++            $arguments= array('first', array('condition'=>'id=?'),
+array($field->getValue()));
++            return ActiveRecord::build(new QueryBuilder($this->class,
+$arguments));
++        } else {
++            throw new AssociationNotFoundException('Cannot execute
+Association ``has_one" on ' . $this->class);
+         }
+     }
+ }
+@@ -217,25 +194,20 @@
+ class HasAndBelongsToManyAssociation extends Association {
+
+     public function execute() {
+-        $this->pre_execution();
+         if ($this->class < $this->owner) {
+             $join_table= $this->class . '_' .
+Inflector::pluralize($this->owner);
+         } else {
+             $join_table= Inflector::pluralize($this->owner) . '_' .
+Inflector::pluralize($this->class);
+         }
+-        $ret= ActiveRecordBase::__find(
+-                            array(
+-                                array(
+-                                    'include'  => $this->class . '.*',
+-                                    'left join'=>
+-                                        $join_table . ' ON ' . $this->class .
+-                                        '.id=' . $join_table . '.' .
+Inflector::singularize($this->class) . '_id',
+-                                     'condition'=>
+-                                        $join_table . '.' .
+Inflector::singularize($this->owner) . '_id=' . $this->pk
+-                                    )
+-                                )
+-                            );
+-        $this->post_execution();
+-        return $ret;
++        $arguments=array();
++        $arguments[]='all';
++        $clauses= array();
++        $clauses['columns']   = $this->class.'.*';
++        $clauses['left join'] = $join_table . ' on ' . $this->class .
+'.id=' . $join_table . '.' . Inflector::singularize($this->class) .
+'_id';
++        $clauses['condition'] = $join_table . '.' .
+Inflector::singularize($this->owner) . '_id=?';
++        $arguments[]= $clauses;
++        $arguments[]= array($this->pk);
++        return ActiveRecord::build(new
+QueryBuilder(Inflector::singularize($this->class), $arguments));
+     }
+ }
++
+
+Modified: trunk/libs/active/record/Base.php
+===================================================================
+--- trunk/libs/active/record/Base.php   2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/active/record/Base.php   2006-02-05 14:58:35 UTC (rev 344)
+@@ -33,34 +33,34 @@
+ // }}}
+
+ // ActiveRecord dependencies.
+-// include_once('active/record/FieldsAggregate.php');
+ include_once('active/record/DatabaseRow.php');
+ include_once('active/record/RowsAggregate.php');
+ include_once('active/record/QueryBuilder.php');
+-include_once('active/support/Inflector.php');
++include_once('active/record/SQLCommand.php');
+ include_once('active/record/Association.php');
+ include_once('active/record/Validator.php');
++include_once('active/support/Inflector.php');
+ // 3-rd party.
+ include_once('creole/Creole.php');
+
+ /**
+  * @package locknet7.active.record
+  */
+-abstract class ActiveRecordBase extends Object {
++abstract class ActiveRecord extends Object {
+
+     /* class name: Person */
+-    static protected $class_name = NULL;
++    protected $class_name = NULL;
+     /* table mane: persons */
+-    static protected $table_name = NULL;
++    protected $table_name = NULL;
+     /* database connection */
+-    static protected $conn       = NULL;
++    static protected $conn= NULL;
+
+     /** @var DatabaseRow
+         our database row. */
+     protected $row;
+
+     /** @var string
+-        primary key name! */
++        primary key name */
+     private $pk;
+
+     // {{{ Associations
+@@ -96,15 +96,15 @@
+      * PHP Engine will call this constructor by default.
+      * @param array, params, parameters as pair of `field name` => `value`
+      */
+-    public final function __construct($params = array()) {
++    public final function ActiveRecord($params = array()) {
+         self::establish_connection();
+-        self::$class_name = $this->getClassName();
+-        self::$table_name =
+Inflector::pluralize(strtolower(Inflector::underscore(self::$class_name)));
++        $this->class_name = $this->getClassName();
++        $this->table_name =
+Inflector::pluralize(strtolower(Inflector::underscore($this->class_name)));
+
+-        $table_info   =
+self::$conn->getDatabaseInfo()->getTable(self::$table_name);
++        $table_info   =
+self::$conn->getDatabaseInfo()->getTable($this->table_name);
+         $this->pk     = $table_info->getPrimaryKey()->getName();
+
+-        $this->row = new DatabaseRow();
++        $this->row = new DatabaseRow($this->table_name);
+         foreach( $table_info->getColumns() as $col) {
+             $field = new Field( $col->getName() );
+             // $field->size = $col->getSize();
+@@ -165,7 +165,7 @@
+                                     'has_many'   => $this->has_many,
+                                     'has_and_belongs_to_many' =>
+$this->has_and_belongs_to_many
+                                     ),
+-                                self::$table_name,
++                                $this->table_name,
+                                 $field_name,
+                                 $this->row
+                                 )->execute();
+@@ -177,7 +177,9 @@
+     }
+
+     /**
+-     * This method is run before any call to ActiveRecordBase public methods!
++     * @TODO: This method is not working as expected!
++     *
++     * This method is run before any call to ActiveRecord public
+methods! (nope: php 5.1.2)
+      * Removes some duplicate code from the list with <tt>know_methods</tt>.
+      * ALso, it defines some methods aliases (eg: delete===distroy)
+      *
+@@ -213,13 +215,13 @@
+
+     /** Prepare this Object for serialization */
+     public function __sleep() {
+-        self::close_connection();
+-        return array('fields', 'pk', 'has_one', 'belongs_to',
+'has_many', 'has_and_belongs_to_many');
++        ActiveRecord::close_connection();
++        return array('row', 'pk', 'has_one', 'belongs_to',
+'has_many', 'has_and_belongs_to_many');
+     }
+
+     /** restore the Object state after unserialize */
+     public function __wakeup() {
+-        self::establish_connection();
++        ActiveRecord::establish_connection();
+         for($it = $this->fields->getIterator(); $it->valid(); $it->next()) {
+             $field_name= $it->current()->getName();
+             $this->$field_name = $it->current()->getValue();
+@@ -418,7 +420,7 @@
+         foreach ($this->row->getAffectedFields() as $col) {
+             $whereClause[] = $col->getName() . ' = ? ';
+         }
+-        $sql = 'DELETE FROM ' . ActiveRecordBase::$table_name . '
+WHERE ' . implode(' AND ', $whereClause);
++        $sql = 'DELETE FROM ' . $this->table_name . ' WHERE ' .
+implode(' AND ', $whereClause);
+         $af= $this->performQuery($sql);
+         $this->after_delete();
+         return $af;
+@@ -434,7 +436,7 @@
+     private function getNextId() {
+         if ($this->row->getPrimaryKey() !== NULL) {
+             $_pk = $this->pk;
+-            $id  = ActiveRecordBase::$conn->getIdGenerator()->getId($this->pk);
++            $id  = ActiveRecord::$conn->getIdGenerator()->getId($this->pk);
+             $this->$_pk = $id;
+             return $id;
+         } else {
+@@ -443,18 +445,19 @@
+     }
+
+     /**
+-     * Helper internal method witch performs an sql query
++     * @TODO: can we use QueryBuilder for this?
++     * Helper, internal method witch performs an sql query, other than select.
+      *
+      * @param string sql the sql query to execute
+      * @return int affected rows
+      * @throws SQLException
+      */
+     private function performQuery($sql) {
+-        $stmt = ActiveRecordBase::$conn->prepareStatement($sql);
+-        ActiveRecordBase::populateStmtValues($stmt,
+$this->row->getAffectedFields());
++        $stmt = ActiveRecord::$conn->prepareStatement($sql);
++        ActiveRecord::populateStmtValues($stmt,
+$this->row->getAffectedFields());
+         $af_rows = $stmt->executeUpdate();
+         $stmt->close();
+-        Registry::get('__logger')->debug('Performing sql query: ' .
+ActiveRecordBase::$conn->lastQuery);
++        // Registry::get('__logger')->debug('Performing sql query: '
+. ActiveRecord::$conn->lastQuery);
+         // $this->_reset();
+         return $af_rows;
+     }
+@@ -473,7 +476,7 @@
+         if ($this->pk !== NULL) {
+             $sqlSnippet = ' WHERE ' . $this->pk . ' = ' .
+$this->row->getPrimaryKey()->getValue();
+         }
+-        $sql  = 'UPDATE ' . ActiveRecordBase::$table_name . ' SET ';
++        $sql  = 'UPDATE ' . $this->table_name . ' SET ';
+         // $sql .= implode(' = ?, ', $this->row->getAffectedFieldsNames());
+
+         foreach($this->row->getAffectedFields() as $field) {
+@@ -488,7 +491,7 @@
+      * @return string
+      */
+     private function getInsertSql() {
+-        return 'INSERT INTO ' . self::$table_name
++        return 'INSERT INTO ' . $this->table_name
+                . ' (' . implode(',',
+$this->row->getAffectedFieldsNames()) . ')'
+                . ' VALUES (' . substr(str_repeat('?,',
+count($this->row->getAffectedFields())), 0, -1) . ')';
+     }
+@@ -513,96 +516,43 @@
+
+     abstract static function find();
+
+-    // {{{ find monster
+-    /**
+-     *
+-     * @throws ActiveRecordException if a requested case is not yet
+implemented (or invalid)
+-     * @throws RecordNotFoundException no record responded to this method
+-     */
+-    public static final function __find($params= array()) {
+-        $numargs = count($params);
+-        if($numargs == 0) return ActiveRecordBase::__find(array('all'));
+-
+-        ActiveRecordBase::establish_connection();
+-
++    public static function build(QueryBuilder $builder) {
++        $class_name= $builder->getOwner();
+         try {
+             // prepare the class instance.
+-            $class = new ReflectionClass(ActiveRecordBase::$class_name);
++            $class = new ReflectionClass($class_name);
+         } catch (ReflectionException $rEx) {
+-            Registry::get('__injector')->inject('model',
+strtolower(ActiveRecordBase::$class_name));
++            Registry::get('__injector')->inject('model',
+strtolower($class_name));
+             // retry:
+-            $class = new ReflectionClass(ActiveRecordBase::$class_name);
++            $class = new ReflectionClass($class_name);
+         }
+-        $query = new QuerryBuilder(ActiveRecordBase::$table_name);
+-
+-        if ( $params[0] == 'all' && $numargs == 1 ) {
+-            // all table fields and one arg.
+-        } elseif ( $params[0] == 'all' && $numargs == 2 &&
+is_array($params[1]) && !empty($params[1]) ) {
+-            $query->addArray($params[1]);
+-        } elseif ( $params[0] == 'first' && $numargs == 2 &&
+is_array($params[1]) && !empty($params[1]) ) {
+-            $query->addArray($params[1]);
+-            $stmt =
+ActiveRecordBase::$conn->prepareStatement($query->buildQuery());
+-            $rs   = $stmt->executeQuery();
++        ActiveRecord::establish_connection();
++        Registry::get('__logger')->debug($builder->compile()->getQueryString());
++        $stmt =
+ActiveRecord::$conn->prepareStatement($builder->compile()->getQueryString());
++        $i=1; foreach($builder->getBindings() as $binding) {
++            $stmt->set($i++, $binding);
++        }
++        $rs = $stmt->executeQuery();
++        if ($builder->getType() == 'first') {
+             if ($rs->getRecordCount() == 1) {
+                 $rs->next();
+                 $stmt->close();
+-                return $class->newInstance($rs->getRow());
++                $result= $class->newInstance($rs->getRow());
++                $rs->close();
++                return $result;
+             } else {
+                 throw new RecordNotFoundException(
+-                    'Couldn\'t find a `' .
+ActiveRecordBase::$class_name . '` to match your query.');
++                    'Couldn\'t find a `' . $class_name . '` to match
+your query.');
+             }
+-        } elseif ( is_numeric($params[0])) {
+-            // we expect only one row!
+-            // we need the pk name.
+-            $pk_name =
+self::$conn->getDatabaseInfo()->getTable(self::$table_name)->getPrimaryKey()->getName();
+-            if ( $numargs == 1 ) {
+-                $query->add('condition', $pk_name . '=?');
+-            } elseif ( $numargs == 2 && is_array($params[1]) &&
+!empty($params[1]) ) {
+-                $query->add('condition', $pk_name . '=?');
+-                $query->addArray($params[1]);
+-            }
+-            $stmt =
+ActiveRecordBase::$conn->prepareStatement($query->buildQuery());
+-            $stmt->setInt(1, $params[0]);
+-            $rs   = $stmt->executeQuery();
+-            if ($rs->getRecordCount() == 1) {
+-                $rs->next();
+-                $stmt->close();
+-                return $class->newInstance($rs->getRow());
+-            } elseif ($rs->getRecordCount() == 0) {
+-                throw new RecordNotFoundException(
+-                    'Couldn\'t find a `' .
+ActiveRecordBase::$class_name . '` with ID=' . $params[0]);
+-            }
+-        } elseif(is_array($params[0])) {
+-            $query->addArray($params[0]);
+-        } else {
+-            throw new ActiveRecordException('Case Not Implemented yet!');
+         }
+-
+-        $stmt =
+ActiveRecordBase::$conn->prepareStatement($query->buildQuery());
+-        // add limit and/or offset if requested
+-        if ($limit = $query->getLimit())   $stmt->setLimit($limit);
+-        if ($offset = $query->getOffset()) $stmt->setOffset($offset);
+-        $rs = $stmt->executeQuery();
+-        /*
+-        if ($rs->getRecordCount() == 0) {
+-            throw new RecordNotFoundException(
+-                'Couldn\'t find a ' . ActiveRecordBase::$class_name .
+' The Result Set was empty!');
+-        }
+-        */
+-        // build a list with objects of this type.
+         $results = new RowsAggregate();
+         while ($rs->next()) {
+             $results->add($class->newInstance($rs->getRow()));
+         }
+         // release resources.
+-        $rs->close(); $stmt->close();
+-        Registry::get('__logger')->debug('Performed sql query: ' .
+ActiveRecordBase::$conn->lastQuery);
++        $rs->close();$stmt->close();
++        Registry::get('__logger')->debug(ActiveRecord::$conn->lastQuery);
+         return $results;
+     }
+-    // }}}
+-
+-    public static final function initialize($table) {
+-        ActiveRecordBase::$table_name=
+strtolower(Inflector::pluralize($table));
+-        ActiveRecordBase::$class_name= ucfirst($table);
+-    }
+ }
++
+
+Modified: trunk/libs/active/record/DatabaseRow.php
+===================================================================
+--- trunk/libs/active/record/DatabaseRow.php    2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/DatabaseRow.php    2006-02-05 14:58:35
+UTC (rev 344)
+@@ -35,7 +35,8 @@
+ include_once('active/record/Field.php');
+
+ /**
+- * It represents a Row from the Database, generic named here FieldsAggregate
++ * It represents a Row from the Database
++ *
+  * @package locknet7.active.record
+  */
+
+@@ -47,7 +48,7 @@
+
+     /** @var array
+         holds the field names */
+-    private $field_names     = array();
++    private $field_names = array();
+
+     /** @var array
+         affected fields, Filed[] */
+@@ -57,6 +58,33 @@
+         affected flag. */
+     private $affected = FALSE;
+
++    /** @var string
++        this database table name */
++    private $table;
++
++    /**
++     * Creates a new DatabaseRow
++     *
++     * @param string table, the table name where this row is from
++     */
++    public function DatabaseRow($table) {
++        $this->table= $table;
++        parent::__construct();
++    }
++
++    /**
++     * It gets the table name
++     *
++     * @return string, the table name
++     */
++    public function getTable() {
++        return $this->table;
++    }
++
++    /**
++     * Automatic trigger executed when a new Field is added on to
+this Collection
++     * @see Collection::onAdd
++     */
+     public function onAdd(Object $field) {
+         if (!$field instanceof Field) {
+             throw new IllegalArgumentException(
+@@ -108,6 +136,11 @@
+         return FALSE;
+     }
+
++    /**
++     * Collects errors from the fields added on this row
++     *
++     * @return array an array of errors
++     */
+     public function collectErrors() {
+         $errors= array();
+         $it = $this->iterator();
+@@ -144,3 +177,4 @@
+         return $this->hasAffected() ? $this->affected_fields : array();
+     }
+ }
++
+
+Modified: trunk/libs/active/record/QueryBuilder.php
+===================================================================
+--- trunk/libs/active/record/QueryBuilder.php   2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/QueryBuilder.php   2006-02-05 14:58:35
+UTC (rev 344)
+@@ -33,147 +33,59 @@
+ // }}}
+
+ /**
+- * It builds Select SQL querys
++ * It knows how to create a SQLCommand from an array
++ *
+  * @package locknet7.active.record
+  */
+-class QuerryBuilder extends Object {
++class QueryBuilder extends Object {
+
+-    /** @var array
+-        select, used in include modifier */
+-    private $select = array();
++    private $owner;
+
+-    /** @var array
+-        from clause, this includes the table name and joins */
+-    private $fromClause = array();
++    private $clauses=array();
+
+-    /** @var array
+-        where clause */
+-    private $whereClause = array();
++    private $bindings=array();
+
+-    /** @var string
+-        adds an order by */
+-    private $orderBy;
++    private $type;
+
+-    /** @var int limit */
+-    private $limit  = FALSE;
+-
+-    /** @var int offset */
+-    private $offset = FALSE;
+-
+-    /**
+-     * Creates a new QueryBuilder
+-     * @param string table
+-     */
+-    public function __construct($table) {
+-        $this->fromClause[]= $table;
+-    }
+-
+-    /**
+-     * It adds a modifier to this select
+-     *
+-     * @param string type of this modifier
+-     * @param string value of this modifier
+-     * @throws ActiveRecordException when the type is unknown
+-     * @return void
+-     */
+-    public function add($type, $value) {
+-        switch ($type) {
+-            case 'include':
+-                $this->addSelect($value);
+-                break;
+-            case 'condition':
+-                $this->addWhere($value);
+-                break;
+-            case 'left join':
+-                $this->addJoin('LEFT', $value);
+-                break;
+-            case 'limit':
+-                $this->limit = (int)$value;
+-                break;
+-            case 'offset':
+-                $this->offset = (int)$value;
+-                break;
+-            case 'order':
+-                $this->orderBy = $value;
+-                break;
+-            default:
+-                throw new ActiveRecordException ('Call to unknow
+modifier: `' . $type . '`');
+-                break;
++    public function QueryBuilder($owner, $arguments) {
++        $this->owner= $owner;
++        if ( !count($arguments) || $arguments[0] == 'all' ) {
++            $this->type= 'all';
++        } else {
++            $this->type = 'first';
+         }
+-    }
+-
+-    /**
+-     * Adds modifiers as array
+-     * @param array the array of parameters to pass
+-     */
+-    public function addArray(/*array*/ $params) {
+-        foreach ($params AS $type=>$value) {
+-            $this->add($type, $value);
++        if (isset($arguments[0]) && is_numeric($arguments[0])) {
++            $this->clauses['condition']='id=?';
++            $this->bindings[]=$arguments[0];
+         }
++        if (isset($arguments[1])) {
++            $this->clauses= $arguments[1];
++        }
++        if (isset($arguments[2])) {
++            $this->bindings= $arguments[2];
++        }
+     }
+
+-    /**
+-     * It gets the limit
+-     * @return int the limit or FALSE if the limit was not changed
+-     */
+-    public function getLimit() {
+-        return $this->limit;
++    public function getOwner() {
++        return $this->owner;
+     }
+
+-    /**
+-     * It gets the offset
+-     * @return int the offset or FALSE if the offset was not changed
+-     */
+-    public function getOffset() {
+-        return $this->offset;
++    public function getBindings() {
++        return $this->bindings;
+     }
+
+-    /**
+-     * It buils the select query based on the modifiers passed.
+-     * @return string the sql querys
+-     */
+-    public function buildQuery() {
+-        $query =  "SELECT "
+-                 . ($this->select ? implode(" ", $this->select) . " " : " * ")
+-                 // .implode(", ", $selectClause)
+-                 // . " FROM " . implode(", ", $fromClause)
+-                 // . " FROM " . $this->table
+-                 . " FROM " . implode(" ", $this->fromClause)
+-                 . ($this->whereClause ? " WHERE " . implode(" AND ",
+$this->whereClause) : "")
+-                 // .($groupByClause ? " GROUP BY ".implode(",",
+$groupByClause) : "")
+-                 // .($havingString ? " HAVING ".$havingString : "")
+-                 // . ($this->orderBy ? " ORDER BY " . implode(",",
+$this->orderBy) : "");
+-                 . ($this->orderBy ? " ORDER BY " . $this->orderBy : "");
+-        Registry::get('__logger')->debug('Trying to run sql query:');
+-        Registry::get('__logger')->debug($query);
+-        return $query;
+
+-
++    public function getType() {
++        return $this->type;
+     }
+
+-    // {{{ internal helpers.
+-    /**
+-     * Adds a select clause
+-     * @param string select clause to add
+-     */
+-    private function addSelect($select) {
+-        $this->select[] = $select;
++    public function compile() {
++        $command=
+SQLCommand::select($this->type)->from(Inflector::tabelize($this->owner));
++        if (isset($this->clauses['condition'])) 
+$command->where($this->clauses['condition']);
++        if (isset($this->clauses['order by']))  
+$command->orderBy($this->clauses['order by']);
++        if (isset($this->clauses['columns']))   
+$command->columns($this->clauses['columns']);
++        if (isset($this->clauses['left join'])) 
+$command->leftJoin('left outer join ' . $this->clauses['left join']);
++        return $command;
+     }
+-
+-    /**
+-     * Adds a where clause
+-     * @param string where clause to add
+-     */
+-    private function addWhere($where) {
+-        $this->whereClause[] = $where;
+-    }
+-
+-    /**
+-     * Adds a join clause
+-     * @param string join clause to add
+-     */
+-    private function addJoin($args, $value) {
+-        $this->fromClause[] = $args . " JOIN " . $value;
+-    }
+-    // }}}
+ }
++
+
+Modified: trunk/libs/active/record/RowsAggregate.php
+===================================================================
+--- trunk/libs/active/record/RowsAggregate.php  2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/RowsAggregate.php  2006-02-05 14:58:35
+UTC (rev 344)
+@@ -54,7 +54,7 @@
+      * @param ActiveRecordBase row the row to add into this container
+      * @return ActiveRecordBase
+      */
+-    public function add(ActiveRecordBase $row) {
++    public function add(ActiveRecord $row) {
+         $this->container->append($row);
+         return $row;
+     }
+
+Added: trunk/libs/active/record/SQLCommand.php
+===================================================================
+--- trunk/libs/active/record/SQLCommand.php     2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/SQLCommand.php     2006-02-05 14:58:35
+UTC (rev 344)
+@@ -0,0 +1,133 @@
++<?php
++// {{{ License
++// ///////////////////////////////////////////////////////////////////////////////
++//
++// Copyright (c) 2005, 2006 Oancea Aurelian <aurelian at locknet.ro>
++//
++// Redistribution and use in source and binary forms, with or without
++// modification, are permitted provided that the following conditions are met:
++//
++//   * Redistributions of source code must retain the above copyright notice,
++//   this list of conditions and the following disclaimer.
++//   * Redistributions in binary form must reproduce the above
+copyright notice,
++//   this list of conditions and the following disclaimer in the documentation
++//   and/or other materials provided with the distribution.
++//   * Neither the name of Oancea Aurelian nor the names of his
+contributors may
++//   be used to endorse or promote products derived from this software without
++//   specific prior written permission.
++//
++// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
++// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE
++// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
++// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
++// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY,
++// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+OF THE USE
++// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++//
++// $Id$
++//
++// ///////////////////////////////////////////////////////////////////////////////
++// }}}
++
++/**
++ * It represents an sql command
++ *
++ * You can use this object to build sql query`s in a fancy way:
++ * <code>
++ *  $command= SQLCommand::select()->from('news')->where('state=?')->orderBy('created_at');
++ * // later, you can use a PreparedStatement to bind parameters.
++ *  $stmt= $conn->prepareStatement($command->getQueryString());
++ *  $stmt->setInt(1, News::PUBLISHED);
++ *  $rs= $stmt->executeQuery();
++ * </code>
++ * More methods will be added later-on, API will be provided on request.
++ *
++ * @package locknet7.active.record
++ * @since Rev. 343
++ */
++class SQLCommand extends Object {
++
++    private $command;
++
++    private $tables= array();
++
++    private $wheres= array();
++
++    private $orderBy;
++
++    private $columns;
++
++    private function SQLCommand($command) {
++        $this->command= $command;
++    }
++
++    public static function select($ret_values) {
++        return new SQLCommand('select');
++    }
++
++    public function from($table) {
++        $this->tables[]= $table;
++        return $this;
++    }
++
++    public function where($clause) {
++        $this->wheres[]= $clause;
++        return $this;
++    }
++
++    public function orderBy($clause) {
++        $this->orderBy= $clause;
++        return $this;
++    }
++
++    public function columns($columns) {
++        $this->columns= $columns;
++        return $this;
++    }
++
++    public function leftJoin($what) {
++        $this->tables[]=$what;
++        return $this;
++    }
++
++    public function getQueryString() {
++        $query= $this->command . " ";
++        // if ($this->distinct) $query .= "distinct ";
++        $query .= $this->appendColumns();
++        // $query .= " from " . $this->from;
++        $query .= $this->appendFrom();
++        $query .= $this->appendWhere();
++        $query .= $this->appendOrderBy();
++        return $query;
++    }
++
++    private function appendColumns() {
++        return $this->columns ? " " . $this->columns . " " : "*";
++    }
++
++    private function appendFrom() {
++        $q= " from ";
++        $size= count($this->tables);
++        for ($i = 0; $i < $size; ++$i) {
++            $q .= $this->tables[$i];
++            if ($i <= $size - 2) {
++                $q .= "  ";
++            }
++        }
++        return $q;
++    }
++
++    private function appendWhere() {
++        if (count($this->wheres)) return " where " . implode(" and ",
+$this->wheres);
++        else return "";
++    }
++
++    private function appendOrderBy() {
++        return $this->orderBy ? " order by " . $this->orderBy : "";
++    }
++
++}
++
+
+
+Property changes on: trunk/libs/active/record/SQLCommand.php
+___________________________________________________________________
+Name: svn:keywords
+   + Id
+
+Modified: trunk/libs/active/record/Validator.php
+===================================================================
+--- trunk/libs/active/record/Validator.php      2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/record/Validator.php      2006-02-05 14:58:35
+UTC (rev 344)
+@@ -76,8 +76,16 @@
+
+     private function isNotUnique(Field $field) {
+         try {
+-            ActiveRecordBase::__find(array(
+-                array('condition'=>$field->getName()
+.'=\''.$field->getValue().'\'')));
++            ActiveRecord::build(
++                new QueryBuilder(
++                    $this->row->getTable(),
++                    array(
++                        'first',
++                        array('condition'=>$field->getName() . '=?'),
++                        array($field->getValue()
++                    )
++                )
++            ));
+             $field->addError('is not unique');
+             return TRUE;
+         } catch (RecordNotFoundException $rnfEx) {
+
+Modified: trunk/libs/active/support/Inflector.php
+===================================================================
+--- trunk/libs/active/support/Inflector.php     2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/active/support/Inflector.php     2006-02-05 14:58:35
+UTC (rev 344)
+@@ -113,6 +113,11 @@
+         return $word;
+     }
+
++    public static function tabelize($class) {
++        $s= strtolower(Inflector::pluralize($class));
++        return $s;
++    }
++
+     // {{{ based on cake.
+     public static function camelize($word) {
+         return str_replace(" ", "", ucwords(str_replace("_", " ", $word)));
+
+
+Modified: trunk/libs/logger/Logger.php
+===================================================================
+--- trunk/libs/logger/Logger.php        2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/logger/Logger.php        2006-02-05 14:58:35 UTC (rev 344)
+@@ -85,8 +85,6 @@
+             include_once('logger' . DIRECTORY_SEPARATOR . 'formatter'
+. DIRECTORY_SEPARATOR . $_klazz . '.php');
+             $this->formatter= new $_klazz;
+         }
+-
+-        $this->debug('Logger ready');
+     }
+
+     /** __magic __overloading__ */
+
+Modified: trunk/libs/logger/formatter/Formatter.php
+===================================================================
+--- trunk/libs/logger/formatter/Formatter.php   2006-01-29 15:39:43
+UTC (rev 343)
++++ trunk/libs/logger/formatter/Formatter.php   2006-02-05 14:58:35
+UTC (rev 344)
+@@ -54,6 +54,7 @@
+      */
+     protected function extractMessage($message) {
+         if(!is_string($message)) $message = print_r($message, TRUE);
++        $message= str_replace($_SERVER['MEDICK_APPLICATION_PATH'],
+"{" . strtoupper($_SERVER['MEDICK_APPLICATION_NAME']) . "}",
+$message);
+         return $message;
+     }
+ }
+
+Modified: trunk/libs/medick/Dispatcher.php
+===================================================================
+--- trunk/libs/medick/Dispatcher.php    2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/medick/Dispatcher.php    2006-02-05 14:58:35 UTC (rev 344)
+@@ -38,6 +38,8 @@
+ include_once('action/controller/Base.php');
+
+ /**
++ * It knows how to dispatch a request
++ *
+  * @package locknet7.medick
+  */
+ class Dispatcher extends Object {
+@@ -52,9 +54,8 @@
+         try {
+             ActionControllerRouting::recognize($request)->process($request,
+$response)->dump();
+         } catch (Exception $ex) {
+-            ActionControllerBase::process_with_exception($request,
+$response, $ex)->dump();
++            ActionController::process_with_exception($request,
+$response, $ex)->dump();
+             Registry::get('__logger')->warn($ex->getMessage());
+         }
+     }
+ }
+-
+
+Modified: trunk/libs/medick/ErrorHandler.php
+===================================================================
+--- trunk/libs/medick/ErrorHandler.php  2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/medick/ErrorHandler.php  2006-02-05 14:58:35 UTC (rev 344)
+@@ -33,15 +33,16 @@
+ // }}}
+
+ /**
+- * @package locknet7.medick
+  * The Medick Error Handler.
++ *
++ * @package locknet7.medick
+  */
+ class ErrorHandler extends Object {
+
+     /**
+      * Setup this ErrorHandler
+      */
+-    public function __construct() {
++    public function ErrorHandler() {
+         ini_set('docref_root', null);
+         ini_set('docref_ext', null);
+     }
+@@ -55,15 +56,11 @@
+      */
+     function raiseError($errno, $errstr, $errfile, $errline) {
+         $errRep = error_reporting();
+-
+         if( ($errno & $errRep) != $errno) {
+             return;
+         }
+-
+         $trace = debug_backtrace();
+         array_shift($trace);
+-
+         throw new Error( $errstr, $errno, $errfile, $errline, $trace );
+-
+     }
+ }
+
+Modified: trunk/libs/medick/Exception.php
+===================================================================
+--- trunk/libs/medick/Exception.php     2006-01-29 15:39:43 UTC (rev 343)
++++ trunk/libs/medick/Exception.php     2006-02-05 14:58:35 UTC (rev 344)
+@@ -178,4 +178,3 @@
+  */
+ class AssociationNotFoundException extends MedickException{ }
+ // }}}
+-
+
+
+From oancea at gmail.com  Tue Feb  7 08:20:25 2006
+From: oancea at gmail.com (aurelian)
+Date: Tue, 7 Feb 2006 09:20:25 +0200
+Subject: [Medick-devel] r345.
+Message-ID: <514f44140602062320r1189447vba3b510deb34c885@mail.gmail.com>
+
+Hello,
+
+Again, the message was too big, so here it`s the log of 354 commit.
+
+Author: aurelian
+Date: 2006-02-06 20:33:06 +0100 (Mon, 06 Feb 2006)
+New Revision: 345
+
+Added:
+   applications/eltodo/app/helpers/project_helper.php
+   applications/eltodo/app/views/project/overview.phtml
+   applications/eltodo/libs/Textile.php
+   applications/eltodo/public/images/edit.png
+   trunk/test/application/models/news.php
+   trunk/test/test/active/record/QueryBuilderTest.php
+   trunk/test/test/active/record/SQLCommandTest.php
+   trunk/test/test/active/record/ValidatorTest.php
+Modified:
+   applications/eltodo/app/controllers/application.php
+   applications/eltodo/app/controllers/project_controller.php
+   applications/eltodo/app/models/project.php
+   trunk/libs/action/controller/Injector.php
+   trunk/libs/action/controller/Route.php
+   trunk/libs/active/record/Base.php
+   trunk/libs/active/record/QueryBuilder.php
+   trunk/libs/active/record/SQLCommand.php
+   trunk/libs/active/record/Validator.php
+   trunk/test/application/models/author.php
+   trunk/test/application/models/book.php
+   trunk/test/application/models/fakemodeltwo.php
+   trunk/test/mock/MockConfigurator.php
+   trunk/test/test/action/controller/InjectorTest.php
+   trunk/test/test/active/record/DBOperationsTest.php
+   trunk/test/test/active/record/FindTest.php
+   trunk/test/test/active/record/associations/HasOneTest.php
+Log:
+ -- fix elTodo sample application
+ -- fix unit tests
+ -- added Validator, QueryBuilder and SQLCommand unit tests.
+ -- added limit and offset options on QueryBuilder
+ -- removed white spaces from columns clause on SQLCommand
+ -- added API docs on what type on clauses we know how to parse
+ -- removed unused select parameter on SQLCommand::select
+ -- Injector- use application_path setting from xml configuration file
+if SERVER[MEDICK_APPLICATION_PATH] is not found
+ -- Injector::Injector added append parameter with will add 'app/'
+string to application path, defaults to TRUE (not breaking BC)
+ -- added Injector::getType($type), $type defaults to NULL
+ -- added Route::toString method + debug with logger when the Route is found.
+ -- bundled a small modified version of Textile class (BSD-like?) -
+version 2.0beta.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sun Feb 12 09:41:29 2006
+From: oancea at gmail.com (aurelian)
+Date: Sun, 12 Feb 2006 10:41:29 +0200
+Subject: [Medick-devel] Promoting medick.
+Message-ID: <514f44140602120041y76c9412dpfe94e22f748ae8c2@mail.gmail.com>
+
+Hi Andrei,
+
+Please try not to promote medick since:
+1. we cannot waste our time to answer to a lot of stupid questions
+like how can I send an email from php or how can I upload an image,
+and more important:
+2. we are still on a planning stage so it`s very possible to change
+the API that we have right now.
+
+Thank-you.
+aurelian.
+
+
+From oancea at gmail.com  Sat Feb 25 21:59:24 2006
+From: oancea at gmail.com (aurelian)
+Date: Sat, 25 Feb 2006 22:59:24 +0200
+Subject: [Medick-devel] Preparing Release 0.1
+Message-ID: <514f44140602251259j74620bafs78651845e4a631f1@mail.gmail.com>
+
+Hello,
+
+I have created a special branch on subversion for Release 0.1.
+
+Update you svn tree or:
+svn checkout svn://svn.berlios.de/medick/branches/release_0.1 medick
+for a clean checkout.
+
+The trunk has become 0.2.
+
+However, I want to solve a small issues on Routing System before 0.1
+
+     ** Dynamic/Static URL Components:
+This will allow us to define static routes like:
+$r= new Route('project/:action/:id');
+and with setDefaults method we will be able to set the controller
+or
+$r= new Route('archive/:year/:month/:day/:id');
+again with some defaults values.
+
+     ** Named Routes:
+Here I was thinking to add WELCOME, ERROR, NOTFOUND keywords  and to
+let the user set the name of a route like this:
+$route->setName(Route::WELCOME),
+basically some const to Route class.
+
+Unfortunatly I will not finish the fastwork web site before this
+release, so I installed our ``elTodo" application here:
+http://29dots.com/eltodo/project/all.html
+
+Release 0.1 is expected this week (max 5.March).
+
+Regards,
+Aurelian.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sat Mar 18 20:34:51 2006
+From: oancea at gmail.com (aurelian)
+Date: Sat, 18 Mar 2006 21:34:51 +0200
+Subject: [Medick-devel] medick-0.2.1 released
+Message-ID: <514f44140603181134h7babb2e4hbdabc197d3c2aa7e@mail.gmail.com>
+
+I'm very proud to annonce you that medick[1] version 0.2.1 has been released[2].
+
+What's new?
+
+* API docs bundled in the download package
+* Medick Environments
+* Minor fixes
+
+Read the complete changelog[3]:
+
+Not to many new things one might say, but the most
+important is the fact that I spend some time on writing
+some cool documentation:
+
+* "The Long Intro"[4] -- still a work in progress,
+* the API docs [5],
+* a small and aready outdated "screencast"[6].
+
+
+[1] http://medick.locknet.ro
+[2] http://medick.locknet.ro/download/medick-0.2.1.tgz
+[3] http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&rev=379&sc=0
+[4] http://medick.locknet.ro/documentation.html
+[5] http://medick.locknet.ro/api
+[6] http://medick.locknet.ro/getting_started.html
+
+Regards,
+--
+Aurelian Oancea
+onProjects [still beta]
+http://locknet.ro
+
+
+From apanaitescu at gmail.com  Sat Mar 18 21:12:06 2006
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Sat, 18 Mar 2006 22:12:06 +0200
+Subject: [Medick-devel] medick-0.2.1 released
+In-Reply-To: <514f44140603181134h7babb2e4hbdabc197d3c2aa7e@mail.gmail.com>
+References: <514f44140603181134h7babb2e4hbdabc197d3c2aa7e@mail.gmail.com>
+Message-ID: <4e6a12c10603181212g22cb0cf2n489cd55965fdcfcf@mail.gmail.com>
+
+Hello
+
+On 3/18/06, aurelian wrote:
+> I'm very proud to annonce you that medick[1] version 0.2.1 has been released[2].
+>
+> What's new?
+>
+> * API docs bundled in the download package
+> * Medick Environments
+> * Minor fixes
+>
+> Read the complete changelog[3]:
+>
+> Not to many new things one might say, but the most
+> important is the fact that I spend some time on writing
+> some cool documentation:
+>
+> * "The Long Intro"[4] -- still a work in progress,
+> * the API docs [5],
+> * a small and aready outdated "screencast"[6].
+>
+>
+> [1] http://medick.locknet.ro
+> [2] http://medick.locknet.ro/download/medick-0.2.1.tgz
+> [3] http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&rev=379&sc=0
+> [4] http://medick.locknet.ro/documentation.html
+> [5] http://medick.locknet.ro/api
+> [6] http://medick.locknet.ro/getting_started.html
+
+Dude, thats impressive.
+What happen with 0.1?
+
+--
+andrei
+
+

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] Preparing Release 0.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Preparing%20Release%200.1&In-Reply-To=%3C514f44140602251259j74620bafs78651845e4a631f1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000033.html">
+   <LINK REL="Next"  HREF="000035.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] Preparing Release 0.1</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Preparing%20Release%200.1&In-Reply-To=%3C514f44140602251259j74620bafs78651845e4a631f1%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] Preparing Release 0.1">oancea at gmail.com
+       </A><BR>
+    <I>Sat Feb 25 21:59:24 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000033.html">[Medick-devel] Promoting medick.
+</A></li>
+        <LI>Next message: <A HREF="000035.html">[Medick-devel] medick-0.2.1 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#34">[ date ]</a>
+              <a href="thread.html#34">[ thread ]</a>
+              <a href="subject.html#34">[ subject ]</a>
+              <a href="author.html#34">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have created a special branch on subversion for Release 0.1.
+
+Update you svn tree or:
+svn checkout <A HREF="svn://svn.berlios.de/medick/branches/release_0.1">svn://svn.berlios.de/medick/branches/release_0.1</A> medick
+for a clean checkout.
+
+The trunk has become 0.2.
+
+However, I want to solve a small issues on Routing System before 0.1
+
+     ** Dynamic/Static URL Components:
+This will allow us to define static routes like:
+$r= new Route('project/:action/:id');
+and with setDefaults method we will be able to set the controller
+or
+$r= new Route('archive/:year/:month/:day/:id');
+again with some defaults values.
+
+     ** Named Routes:
+Here I was thinking to add WELCOME, ERROR, NOTFOUND keywords  and to
+let the user set the name of a route like this:
+$route-&gt;setName(Route::WELCOME),
+basically some const to Route class.
+
+Unfortunatly I will not finish the fastwork web site before this
+release, so I installed our ``elTodo&quot; application here:
+<A HREF="http://29dots.com/eltodo/project/all.html">http://29dots.com/eltodo/project/all.html</A>
+
+Release 0.1 is expected this week (max 5.March).
+
+Regards,
+Aurelian.
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000033.html">[Medick-devel] Promoting medick.
+</A></li>
+	<LI>Next message: <A HREF="000035.html">[Medick-devel] medick-0.2.1 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#34">[ date ]</a>
+              <a href="thread.html#34">[ thread ]</a>
+              <a href="subject.html#34">[ subject ]</a>
+              <a href="author.html#34">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

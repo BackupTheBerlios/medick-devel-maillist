@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] medick-0.0.4 released
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20medick-0.0.4%20released&In-Reply-To=%3C514f44140601120051u3a70c0d2l6dae66d636c65935%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000027.html">
+   <LINK REL="Next"  HREF="000030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] medick-0.0.4 released</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20medick-0.0.4%20released&In-Reply-To=%3C514f44140601120051u3a70c0d2l6dae66d636c65935%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] medick-0.0.4 released">oancea at gmail.com
+       </A><BR>
+    <I>Thu Jan 12 09:51:19 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000027.html">[Medick-devel] Version 0.0.4RC1 released
+</A></li>
+        <LI>Next message: <A HREF="000030.html">[Medick-devel] New Features added for 0.1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+Today I have uploaded the tar-ball with medick-0.0.4 on the web site[1].
+
+Changelog[2]:
+========
+    - added medick application generator (bin/medick.php).
+    - re-wrote scripts/generator.php, will create dummy files
+(controllers with associated views and models)
+    - added medick.util, base package for medick collections.
+    - rewrite the Routing System (more like RoR), it`s not completly
+done (20%), but we have a nice working version.
+    - minor refactorings in ActiveRecordBase
+    - code improvements in Logger:
+        - removed heavy back trace witch was attached to every Logging Events.
+        - new Configuration Options, every Outputter can have properties.
+    - removed un-used application_path from configuration options.
+    - removed deprecated methods from the framework.
+
+Release Notes:
+===========
+This is the last release under the pre-alpha stage.
+We (me &amp; andrei) put a lot of time into this, but as promised when I
+launched this project for public in June 2005, in February this year,
+we will go on alpha stage, meaning that the framework will work as
+expected and it will be useful for creating (medium/small) web sites
+quickly.
+Even that we still have a lot of work to do, I think that as it is at
+this version 0.0.4, the framework is still usable. To prove this, on
+the next weeks, I will work (max 10H-15H/week) for creating the first
+public web site with medick. As already announced, It will be the
+fastwork web site.
+Of course, during the development on this web site, I will find many
+missing features or many problems in the framework. As they will be
+discovered, I will fix them, making medick more stable for an alpha
+stage.
+
+Well, until then, happy coding.
+
+--
+aurelian
+
+[1] <A HREF="http://medick.locknet.ro">http://medick.locknet.ro</A>
+[2] <A HREF="http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&amp;rev=0&amp;sc=0">http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&amp;rev=0&amp;sc=0</A>
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+Medick::The framework
+<A HREF="http://medick.locknet.ro">http://medick.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000027.html">[Medick-devel] Version 0.0.4RC1 released
+</A></li>
+	<LI>Next message: <A HREF="000030.html">[Medick-devel] New Features added for 0.1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

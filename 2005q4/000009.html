@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] SPL - another reason to remove this dependency
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20SPL%20-%20another%20reason%20to%20remove%20this%20dependency&In-Reply-To=%3C514f44140510280632u6126cbb9h2e76c7949736b66f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] SPL - another reason to remove this dependency</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20SPL%20-%20another%20reason%20to%20remove%20this%20dependency&In-Reply-To=%3C514f44140510280632u6126cbb9h2e76c7949736b66f%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] SPL - another reason to remove this dependency">oancea at gmail.com
+       </A><BR>
+    <I>Fri Oct 28 15:32:39 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Andrei.
+
+Sorry for the delay, I was kinda busy this week.
+
+Anyway, thanks for reporting this, I dont have a php 5.0 * around.
+
+I replaced the dependency from runner.php, I will try to commit into svn asap.
+
+If you find something similiar please send me a message, and keep your
+php at version 5.0 :)
+
+As for SPL, I will try to get rid of this dependency, but is not the
+most importat think that I have to do in medick right now, see my TODO
+list.
+
+On 10/26/05, Andrei Panaitescu &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">apanaitescu at gmail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I have found another reason to try to remove the crappy spl dependency
+</I>&gt;<i> from medick:
+</I>&gt;<i> under php 5.0.5 some spl classes are not defined, like the
+</I>&gt;<i> RecursiveCachingIterator in runner.php.
+</I>&gt;<i>
+</I>&gt;<i> We have to use some other method to iterate over the files in a folder.
+</I>&gt;<i>
+</I>&gt;<i> More over, the dependency from XMLConfigurator is almost removed (the
+</I>&gt;<i> only place where is still used is getLoggerOutputters method).
+</I>&gt;<i>
+</I>&gt;<i> Wait for my runner patch, independent of php 5.x version and spl.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Andrei.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Medick-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">Medick-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/medick-devel">http://lists.berlios.de/mailman/listinfo/medick-devel</A>
+</I>&gt;<i>
+</I>
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

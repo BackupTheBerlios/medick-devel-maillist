@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] New Features added for 0.1.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20New%20Features%20added%20for%200.1.0&In-Reply-To=%3C514f44140601160019l38273f99i54ea2ad4b12cbba4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   <LINK REL="Next"  HREF="000031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] New Features added for 0.1.0</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20New%20Features%20added%20for%200.1.0&In-Reply-To=%3C514f44140601160019l38273f99i54ea2ad4b12cbba4%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] New Features added for 0.1.0">oancea at gmail.com
+       </A><BR>
+    <I>Mon Jan 16 09:19:03 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Medick-devel] medick-0.0.4 released
+</A></li>
+        <LI>Next message: <A HREF="000031.html">[Medick-devel] Fwd: [Medick-svn] r344
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I`ve been very active in the last weekend and I have added some new
+and cool features to medick.
+
+Here they are:
+
+1. The &quot;Flash&quot; thing.
+================
+See: <A HREF="http://api.rubyonrails.com/classes/ActionController/Flash.html">http://api.rubyonrails.com/classes/ActionController/Flash.html</A>
+for details and a brief explanation.
+
+Back to medick, now you can write:
+
+&lt;?php
+// controller
+class NewsController extends ActionControllerBase {
+
+   // list all the news
+   public function index() {
+
+   }
+
+  // print the form for adding a news
+  public function add()  {
+
+  }
+
+  // creates a news:
+  public function create() {
+     $news= new News();
+     [...]
+     try {
+        $news-&gt;save();
+        $this-&gt;flash('notice', 'News added');
+        $this-&gt;redirect_to('index');
+     } catch (Exception $ex) {
+        $this-&gt;flash('error', 'Cannot add a news, ' . $ex-&gt;getMessage());
+        $this-&gt;render('add');
+  }
+}
+?&gt;
+
+// view:
+// news/index.phtml
+[...]
+&lt;? if(isset($flash['notice'])): ?&gt;
+&lt;?=$flash['notice'];?&gt;
+&lt;? endif; ?&gt;
+[...]
+
+2. Start to work on ActiveRecord validations
+==================================
+This is somehow related with feature 3 (see bellow).
+See: <A HREF="http://api.rubyonrails.com/classes/ActiveRecord/Validations.html">http://api.rubyonrails.com/classes/ActiveRecord/Validations.html</A>
+for details.
+
+Basically, you can use a base set of validations (I will think of a
+way to extend them) in ActiveRecordBase now. Right now only it works
+by adding calls to validates() method in before* filters.
+A failure will generate a ValidationException, not catched by the
+framework, so it will end up in the userland.
+A hash of errors are added to the Field object, this way, the use can
+display all the errors associated with a field.
+
+some code:
+
+&lt;?php
+// model
+class News extends ActiveRecordBase {
+
+    public function before_save()  {
+        $this-&gt;validates()-&gt;presence_of('title', 'body');
+        $this-&gt;validates()-&gt;uniqueness_of('clean_title');
+    }
+
+    [....]
+
+}
+
+3. ActionView helpers
+=================
+This includes the addition of two classes ,
+at this point in Action/View/HTML.php, will be moved to
+Action/View/helpers/*.* :
+
+* ActiveRecordHelper
+See: <A HREF="http://api.rubyonrails.com/classes/ActionView/Helpers/ActiveRecordHelper.html">http://api.rubyonrails.com/classes/ActionView/Helpers/ActiveRecordHelper.html</A>
+for details.
+At this point, this class is the bridge between ActiveRecord
+Validations and the views.
+* FormHelper
+See: <A HREF="http://api.rubyonrails.com/classes/ActionView/Helpers/FormHelper.html">http://api.rubyonrails.com/classes/ActionView/Helpers/FormHelper.html</A>
+for details
+
+code:
+&lt;?php
+//
+// controller
+class NewsController extends ActionControllerBase {
+
+   // list all the news
+   public function index() {
+      $this-&gt;template-&gt;news= News::find();
+   }
+
+  // print the form for adding a news
+  public function add()  {
+      $this-&gt;template-&gt;news= new News();
+  }
+
+  // creates a news:
+  public function create() {
+     $this-&gt;template-&gt;news= new News($this-&gt;request-&gt;getParameter('news'));
+     [...]
+     try {
+        $this-&gt;template-&gt;news-&gt;save();
+        $this-&gt;flash('notice', 'News added');
+        $this-&gt;redirect_to('index');
+     } catch (Exception $ex) {
+        $this-&gt;flash('error', 'Cannot add a news, ' . $ex-&gt;getMessage());
+        $this-&gt;render('add');
+  }
+}
+?&gt;
+
+// in template news/add.phtml
+&lt;?=ActiveRecordBase::error_messages_for($news);?&gt;
+&lt;form action[....]
+
+&lt;?=FormHelper::text_field($news, 'title');?&gt;
+&lt;?=FormHelper::text_area($news, 'body');?&gt;
+&lt;?=FormHelper::check_box($news, 'allow_comments');?&gt;
+[...]
+
+&lt;/form&gt;
+
+4. Bundled scriptaculous with prototype
+===============================
+This javascripts libraries have been bundled into medick.
+See the documentation for usage,
+<A HREF="http://wiki.script.aculo.us/scriptaculous/show/HomePage">http://wiki.script.aculo.us/scriptaculous/show/HomePage</A>
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Everything is yet on a pre-stage, and is the subject of change.
+More methods will be added (for 2 and 3 for sure) as what we provide
+is yet unfinished.
+
+Anyway, as usually I expect your feedback on this, and andrei make
+sure the tests are still working :)
+
+Best Regards,
+Aurelian Oancea.
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Medick-devel] medick-0.0.4 released
+</A></li>
+	<LI>Next message: <A HREF="000031.html">[Medick-devel] Fwd: [Medick-svn] r344
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

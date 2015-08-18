@@ -1,0 +1,108 @@
+From oancea at gmail.com  Sat Jul  1 17:54:24 2006
+From: oancea at gmail.com (aurelian)
+Date: Sat, 1 Jul 2006 18:54:24 +0300
+Subject: [Medick-devel] Medick 0.3.0pre1 Compatibility Breaks
+Message-ID: <514f44140607010854j739360ffn1d9622af0ed35e99@mail.gmail.com>
+
+Hello,
+
+I've started to work on version 0.3.0 version of medick, a php 5 web
+framework (not a collection of classes!).
+
+Since I'm going to introduce some compatibility breaks with older
+versions of medick (0.2.3) I have decided to create minor pre-releases
+up to 0.3.0.
+
+The first one will be version 0.3.0pre1.
+
+Compatibility Breaks in 0.3.0pre1
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Medick 0.3.0 will require php version 5.1.2 or higher.
+That's it, if you want to use medick you have to upgrade php to
+version 5.1.2 or 5.1.4.
+
+2. A new ActiveRecord Validation API that will change the syntax.
+
+So instead of:
+
+class Foo extends ActiveRecord {
+
+  [...]
+    $this->validates()->presence_of('foo','bar');
+    $this->validates()->uniqueness_of('foo','bar');
+  [...]
+
+}
+
+you need to change to:
+
+class Foo extends ActiveRecord {
+
+  [...]
+    $this->validates_presence_of('foo','bar');
+    $this->validates_uniqueness_of('foo','bar');
+  [...]
+
+}
+
+( replace validates() with validates_ ).
+
+3. A new ActiveRecord Validation API will remove the DatabaseRow class.
+Up to now, in medick an ActiveRecord had a DatabaseRow class attached
+filled with Fields objects.
+Since an ActiveRecord should represent a row from the database, I'm
+going to remove the class DatabaseRow, and add an array of Fields to
+medick`s ActiveRecord.
+
+So if you are using the DatabaseRow object in an ActiveRecord to get a
+specific Field:
+
+$this->row->getFieldByName( __FIELD__NAME__ );
+
+you will have to change and access the Field in a straight way:
+
+$this->getField( __FIELD__NAME__ );
+
+Instead of:
+$this->row->getFieldByName( __FIELD__NAME__ )->addError(__ERROR__MESSAGE__);
+you should use:
+$this->getField( __FIELD__NAME__ )->addError(__ERROR__MESSAGE__);
+
+This will also bring a small performance boost to medick ActiveRecord.
+
+-- 
+Aurelian on Projects
+http://www.locknet.ro
+
+
+From oancea at gmail.com  Sun Jul 23 14:46:09 2006
+From: oancea at gmail.com (aurelian)
+Date: Sun, 23 Jul 2006 15:46:09 +0300
+Subject: [Medick-devel] Medick 0.3.0pre2 Breaks
+Message-ID: <514f44140607230546p21d40b0cl599f9edb4f6d1f66@mail.gmail.com>
+
+As announced[1] earlier this month, pre-release 2 for medick 0.3.0
+will add new compatibility breaks.
+One of the goal to the final 0.3.0 is to remove the XML configuration file.
+The first step is introduced in 0.3.0pre2 and it will remove the
+database section from the configuration file.
+This section is now replaced by a ini style file, called database.ini
+and placed in APPLICATION/conf/database.ini.
+
+To upgrade from a previous medick version, create a new file
+conf/database.ini and take a look at this samples to see what you can
+set there:
+http://svn.berlios.de/wsvn/medick/applications/cookbook/conf/database.ini?op=file&rev=0&sc=1
+http://svn.berlios.de/wsvn/medick/applications/eltodo/conf/database.ini?op=file&rev=0&sc=1
+http://svn.berlios.de/wsvn/medick/applications/testor/conf/database.ini?op=file&rev=0&sc=1
+http://svn.berlios.de/wsvn/medick/trunk/skel/config/database.ini?op=file&rev=0&sc=1
+
+Soon medick-0.3.0pre2 will be available for download.
+
+[1] http://bat.berlios.de/pipermail/medick-devel/2006-July/000038.html
+-- 
+onProjects
+http://www.locknet.ro
+
+

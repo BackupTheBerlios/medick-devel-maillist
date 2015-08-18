@@ -1,0 +1,824 @@
+From oancea at gmail.com  Thu Oct 13 10:12:45 2005
+From: oancea at gmail.com (aurelian)
+Date: Thu, 13 Oct 2005 11:12:45 +0300
+Subject: [Medick-devel] test list
+Message-ID: <514f44140510130112u12e3b422rda0f53997c786654@mail.gmail.com>
+
+Testing list medick-devel
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Thu Oct 13 15:30:24 2005
+From: oancea at gmail.com (aurelian)
+Date: Thu, 13 Oct 2005 16:30:24 +0300
+Subject: [Medick-devel] [ medick ] Patched AV::HTML, AC::Base
+Message-ID: <514f44140510130630v207a55a2ge84d2d3fc9808ad2@mail.gmail.com>
+
+Foloseste document_root definit in xml.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: patch.010pre1.diff
+Type: text/x-patch
+Size: 1831 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/medick-devel/attachments/20051013/28c2a5b1/attachment.bin>
+
+From apanaitescu at gmail.com  Mon Oct 17 16:23:40 2005
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 17 Oct 2005 17:23:40 +0300
+Subject: [Medick-devel] logger patch, fixed issue: why do we need 2 iterations.
+Message-ID: <4e6a12c10510170723r34318e36na58ea9b78599ecee@mail.gmail.com>
+
+Hi.
+
+I have Attached the patch for logger, to use only one iteration in
+Logger::load().
+
+However, we need to refine the load method since is kinda hard to use
+another Configurator implementation (aka INI style).
+
+-- Andrei.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: logger.load.diff
+Type: text/x-patch
+Size: 1939 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/medick-devel/attachments/20051017/a4c97437/attachment.bin>
+
+From oancea at gmail.com  Mon Oct 17 16:29:54 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 17 Oct 2005 17:29:54 +0300
+Subject: [Medick-devel] ping -- ignore
+Message-ID: <514f44140510170729h10a4d2e5qa389a0e748d6b3b9@mail.gmail.com>
+
+Hi,
+
+Cred ca este ceva in neregula cu listele astea, nu am primit inca
+mailu de la tine, dar l-am vazut in interfata web.
+
+Andrei da-mi un pong te rog.
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From apanaitescu at gmail.com  Mon Oct 17 16:30:53 2005
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 17 Oct 2005 17:30:53 +0300
+Subject: [Medick-devel] ping -- ignore
+In-Reply-To: <514f44140510170729h10a4d2e5qa389a0e748d6b3b9@mail.gmail.com>
+References: <514f44140510170729h10a4d2e5qa389a0e748d6b3b9@mail.gmail.com>
+Message-ID: <4e6a12c10510170730p820394h4df40fe54170ca73@mail.gmail.com>
+
+PONG.
+
+On 10/17/05, aurelian <oancea at gmail.com> wrote:
+> Hi,
+>
+> Cred ca este ceva in neregula cu listele astea, nu am primit inca
+> mailu de la tine, dar l-am vazut in interfata web.
+>
+> Andrei da-mi un pong te rog.
+>
+>
+> --
+> FastWork::There is no place like localhost
+> http://fastwork.locknet.ro
+> WSM::Windows Service Management
+> http://wsm.berlios.de/
+> _______________________________________________
+> Medick-devel mailing list
+> Medick-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/medick-devel
+>
+>
+
+
+From oancea at gmail.com  Mon Oct 17 16:32:00 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 17 Oct 2005 17:32:00 +0300
+Subject: [Medick-devel] ping -- ignore
+In-Reply-To: <4e6a12c10510170730p820394h4df40fe54170ca73@mail.gmail.com>
+References: <514f44140510170729h10a4d2e5qa389a0e748d6b3b9@mail.gmail.com>
+	 <4e6a12c10510170730p820394h4df40fe54170ca73@mail.gmail.com>
+Message-ID: <514f44140510170732o51294072kf10f2807b949dab4@mail.gmail.com>
+
+Se pare ca e ok, mailul cu loggerul inca nu l-am primit :D
+
+On 10/17/05, Andrei Panaitescu <apanaitescu at gmail.com> wrote:
+> PONG.
+>
+> On 10/17/05, aurelian <oancea at gmail.com> wrote:
+> > Hi,
+> >
+> > Cred ca este ceva in neregula cu listele astea, nu am primit inca
+> > mailu de la tine, dar l-am vazut in interfata web.
+> >
+> > Andrei da-mi un pong te rog.
+> >
+> >
+> > --
+> > FastWork::There is no place like localhost
+> > http://fastwork.locknet.ro
+> > WSM::Windows Service Management
+> > http://wsm.berlios.de/
+> > _______________________________________________
+> > Medick-devel mailing list
+> > Medick-devel at lists.berlios.de
+> > http://lists.berlios.de/mailman/listinfo/medick-devel
+> >
+> >
+>
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Thu Oct 20 20:57:34 2005
+From: oancea at gmail.com (aurelian)
+Date: Thu, 20 Oct 2005 21:57:34 +0300
+Subject: [Medick-devel] Fwd: Medick-svn r227
+Message-ID: <514f44140510201157t2edbf6afr90aa3cc9049e9fea@mail.gmail.com>
+
+Some changes on the way we should test:
+
+Author: aurelian
+Date: 2005-10-20 20:54:26 +0200 (Thu, 20 Oct 2005)
+New Revision: 227
+
+Added:
+   trunk/libs/medick/InvalidOffsetException.php
+   trunk/test/dummy/controllers/
+   trunk/test/dummy/controllers/application.php
+   trunk/test/dummy/controllers/foo_controller.php
+Modified:
+   trunk/libs/active/record/Base.php
+   trunk/libs/medick/Registry.php
+   trunk/test/ARBaseBasicsTest.php
+   trunk/test/ARBaseFindTest.php
+   trunk/test/RegistryTest.php
+   trunk/test/mock/MockConfigurator.php
+   trunk/test/testrunner.php
+Log:
+ -> Registry: added two more methods, this way we can test better:
+# Registry::close() witch removes all the database contents
+# Registry::remove($key) removes the Object identified by the $key
+# InvalidOffsetException is thrown if the requested Object is not found
+
+ -> ActiveRecordBase:
+# Added close() method, to force closing the database connection.
+# Some API docs.
+
+ -> Tests: A test should not depend on another one nor on the order
+the tests are run
+# Closer clean-up for Registry and ActiveRecordBase
+# Moved Prequsites from the testrunner to UnitTests constructors
+
+ -> Files added:
+# medick/InvalidOffsetException, the Registry Exception
+# dummy/controllers/*, some place holders for Routing Test Case (not in SVN yet)
+
+--
+Aurelian.
+
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sun Oct 23 13:27:56 2005
+From: oancea at gmail.com (aurelian)
+Date: Sun, 23 Oct 2005 14:27:56 +0300
+Subject: [Medick-devel] Fwd: [Medick-svn] r234, Major API change in Models.
+Message-ID: <514f44140510230427m5510ed2dm38ba50a532244cf6@mail.gmail.com>
+
+Hello LIST, salut Andrei.
+
+I have made some changes to our Active Record model type, so from now
+you should add a dummy method to your models. See the examples bellow.
+
+---------- Forwarded message ----------
+Author: aurelian
+Date: 2005-10-23 13:20:20 +0200 (Sun, 23 Oct 2005)
+New Revision: 234
+
+Added:
+   trunk/libs/active/record/Association.php
+Modified:
+   trunk/libs/active/record/Base.php
+   trunk/libs/active/record/FieldsAggregate.php
+   trunk/libs/active/record/QueryBuilder.php
+   trunk/libs/medick/Dispatcher.php
+   trunk/libs/medick/Exception.php
+   trunk/test/dummy/models/author.php
+   trunk/test/dummy/models/book.php
+Log:
+!!! Major Changes on Models:
+# due to the php inheritance in static context, a dummy method should
+be added to the models:
+ public static function find() {
+    $args= func_get_args();
+    self::setTable(__CLASS__);
+    return self::__find($args);
+ }
+
+ -> ActiveRecordBase renamed find() to __find()
+ -> added active/record/Association.php, a class to handle
+ActiveRecord Association
+ -> ActiveRecordBase ready-only has_and_belongs_to_many association type
+ -> active/record/QueryBuilder.php added API docs, added `left join` modifier
+ -> medick/Exception.php added `getType` witch retrun the Exception type
+ -> tests/* fixed dummy models to take care of the new way of writing Models
+ -> medick/Dispatcher, Exception Types (our MedickException`s and
+other types of Exceptions) are handle differently
+
+trunk/test/dummy/models/author.php
+=================================
+include_once('active/record/Base.php');
+
+class Author extends ActiveRecordBase {
+    public static function find() {
+        $args= func_get_args();
+        self::setTable(__CLASS__);
+        return self::__find($args);
+    }
+}
+
+trunk/test/dummy/models/book.php
+================================
+class Book extends ActiveRecordBase {
+
+    protected $has_one= array('author');
+
+    public static function find() {
+        $args= func_get_args();
+        self::setTable(__CLASS__);
+        return self::__find($args);
+    }
+ }
+
+
+From apanaitescu at gmail.com  Wed Oct 26 09:01:31 2005
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Wed, 26 Oct 2005 10:01:31 +0300
+Subject: [Medick-devel] SPL - another reason to remove this dependency
+Message-ID: <4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0@mail.gmail.com>
+
+Hello,
+
+I have found another reason to try to remove the crappy spl dependency
+from medick:
+under php 5.0.5 some spl classes are not defined, like the
+RecursiveCachingIterator in runner.php.
+
+We have to use some other method to iterate over the files in a folder.
+
+More over, the dependency from XMLConfigurator is almost removed (the
+only place where is still used is getLoggerOutputters method).
+
+Wait for my runner patch, independent of php 5.x version and spl.
+
+Regards,
+Andrei.
+
+
+From oancea at gmail.com  Fri Oct 28 15:32:39 2005
+From: oancea at gmail.com (aurelian)
+Date: Fri, 28 Oct 2005 16:32:39 +0300
+Subject: [Medick-devel] SPL - another reason to remove this dependency
+In-Reply-To: <4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0@mail.gmail.com>
+References: <4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0@mail.gmail.com>
+Message-ID: <514f44140510280632u6126cbb9h2e76c7949736b66f@mail.gmail.com>
+
+Hello Andrei.
+
+Sorry for the delay, I was kinda busy this week.
+
+Anyway, thanks for reporting this, I dont have a php 5.0 * around.
+
+I replaced the dependency from runner.php, I will try to commit into svn asap.
+
+If you find something similiar please send me a message, and keep your
+php at version 5.0 :)
+
+As for SPL, I will try to get rid of this dependency, but is not the
+most importat think that I have to do in medick right now, see my TODO
+list.
+
+On 10/26/05, Andrei Panaitescu <apanaitescu at gmail.com> wrote:
+> Hello,
+>
+> I have found another reason to try to remove the crappy spl dependency
+> from medick:
+> under php 5.0.5 some spl classes are not defined, like the
+> RecursiveCachingIterator in runner.php.
+>
+> We have to use some other method to iterate over the files in a folder.
+>
+> More over, the dependency from XMLConfigurator is almost removed (the
+> only place where is still used is getLoggerOutputters method).
+>
+> Wait for my runner patch, independent of php 5.x version and spl.
+>
+> Regards,
+> Andrei.
+> _______________________________________________
+> Medick-devel mailing list
+> Medick-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/medick-devel
+>
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sat Oct 29 12:10:54 2005
+From: oancea at gmail.com (aurelian)
+Date: Sat, 29 Oct 2005 13:10:54 +0300
+Subject: [Medick-devel] SPL - another reason to remove this dependency
+In-Reply-To: <514f44140510280632u6126cbb9h2e76c7949736b66f@mail.gmail.com>
+References: <4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0@mail.gmail.com>
+	 <514f44140510280632u6126cbb9h2e76c7949736b66f@mail.gmail.com>
+Message-ID: <514f44140510290310o6ab3b4f0q2128c48b50061de@mail.gmail.com>
+
+runner.php patched.
+
+svn update please.
+--
+Thanks.
+
+On 10/28/05, aurelian <oancea at gmail.com> wrote:
+> Hello Andrei.
+>
+> Sorry for the delay, I was kinda busy this week.
+>
+> Anyway, thanks for reporting this, I dont have a php 5.0 * around.
+>
+> I replaced the dependency from runner.php, I will try to commit into svn asap.
+>
+> If you find something similiar please send me a message, and keep your
+> php at version 5.0 :)
+>
+> As for SPL, I will try to get rid of this dependency, but is not the
+> most importat think that I have to do in medick right now, see my TODO
+> list.
+>
+> On 10/26/05, Andrei Panaitescu <apanaitescu at gmail.com> wrote:
+> > Hello,
+> >
+> > I have found another reason to try to remove the crappy spl dependency
+> > from medick:
+> > under php 5.0.5 some spl classes are not defined, like the
+> > RecursiveCachingIterator in runner.php.
+> >
+> > We have to use some other method to iterate over the files in a folder.
+> >
+> > More over, the dependency from XMLConfigurator is almost removed (the
+> > only place where is still used is getLoggerOutputters method).
+> >
+> > Wait for my runner patch, independent of php 5.x version and spl.
+> >
+> > Regards,
+> > Andrei.
+> > _______________________________________________
+> > Medick-devel mailing list
+> > Medick-devel at lists.berlios.de
+> > http://lists.berlios.de/mailman/listinfo/medick-devel
+> >
+>
+>
+> --
+> FastWork::There is no place like localhost
+> http://fastwork.locknet.ro
+> WSM::Windows Service Management
+> http://wsm.berlios.de/
+>
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sun Nov 20 10:09:33 2005
+From: oancea at gmail.com (aurelian)
+Date: Sun, 20 Nov 2005 11:09:33 +0200
+Subject: [Medick-devel] Revision 272.
+Message-ID: <514f44140511200109p42e7d34ck8189f30d3b3401ce@mail.gmail.com>
+
+Hello,
+the diff was more than 40k, so here is the commit log:
+
+ - [ config/app.bootstrap.php ] removed vendor from the include_path
+ - updated TODO, CHANGELOG
+ - clean-up creole.SQLException
+ - [ ARBase ]:
+   - removed hasResults and reset methods (unused methods)
+   - try to Inject the model in __find method, before throwing an Exception
+   - added before/after filters
+   - clean-up Association (magick __getMethod)
+   - association variabiles are defined as protected
+   - added Field::formattedName
+ - [ ARAssociations ]: implemented associations (read-only)
+ - [ ARField ]: added formattedName class member
+ - medick/Exception.php:
+   - added AssociationNotFoundException
+   - added userInfo member to MedickException
+ - [ ACInjector ] added injectInclude_path method
+ - [ ACBase ] clean-up the output buffering in process_with_exception method
+ - [ action/controller/templates/error.phtml ] removed show source
+option sice it was not so useful
+ - removed action.controller.cli package, affected classes:
+   - medick.Dispatcher
+   - action.controller.Request
+   - action.controller.Response
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From apanaitescu at gmail.com  Mon Nov 21 17:31:56 2005
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 21 Nov 2005 18:31:56 +0200
+Subject: [Medick-devel] [ patch ]ACBase
+Message-ID: <4e6a12c10511210831l2f760e37jd7dcb35cadfa48d6@mail.gmail.com>
+
+Hi,
+
+A little clean-up in ActionControllerBase, by removing
+XMLConfigurator::getDefaultRoute calls.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: acbase.patch
+Type: text/x-patch
+Size: 2037 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/medick-devel/attachments/20051121/6536914e/attachment.bin>
+
+From oancea at gmail.com  Mon Nov 21 19:42:03 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 21 Nov 2005 20:42:03 +0200
+Subject: [Medick-devel] [ patch ]ACBase
+In-Reply-To: <4e6a12c10511210831l2f760e37jd7dcb35cadfa48d6@mail.gmail.com>
+References: <4e6a12c10511210831l2f760e37jd7dcb35cadfa48d6@mail.gmail.com>
+Message-ID: <514f44140511211042i3f42d8dvb5cd57f70475b423@mail.gmail.com>
+
+Hello Andrei,
+
+On 11/21/05, Andrei Panaitescu <apanaitescu at gmail.com> wrote:
+> Hi,
+>
+> A little clean-up in ActionControllerBase, by removing
+> XMLConfigurator::getDefaultRoute calls.
+>
+
+Thanks for your submission, I have reviewed the patch and it will go
+on the "friday commit".
+
+PS. For future, could you please attach the files in-line? Or just
+rename the files to .txt.
+
+Thanks.
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Mon Nov 21 20:47:53 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 21 Nov 2005 21:47:53 +0200
+Subject: [Medick-devel] [ patch ]ACBase
+In-Reply-To: <514f44140511211042i3f42d8dvb5cd57f70475b423@mail.gmail.com>
+References: <4e6a12c10511210831l2f760e37jd7dcb35cadfa48d6@mail.gmail.com>
+	 <514f44140511211042i3f42d8dvb5cd57f70475b423@mail.gmail.com>
+Message-ID: <514f44140511211147j33dfe4b9oacc613f79b319a80@mail.gmail.com>
+
+Hello,
+
+I have changed my mind and I commited your patch today :)
+A nice diff is here:
+http://svn.berlios.de/wsvn/medick/trunk/libs/action/controller/Base.php?op=diff&rev=0&sc=1
+
+Regards,
+aurelian.
+
+On 11/21/05, aurelian <oancea at gmail.com> wrote:
+> Hello Andrei,
+>
+> On 11/21/05, Andrei Panaitescu <apanaitescu at gmail.com> wrote:
+> > Hi,
+> >
+> > A little clean-up in ActionControllerBase, by removing
+> > XMLConfigurator::getDefaultRoute calls.
+> >
+>
+> Thanks for your submission, I have reviewed the patch and it will go
+> on the "friday commit".
+>
+> PS. For future, could you please attach the files in-line? Or just
+> rename the files to .txt.
+>
+> Thanks.
+>
+> --
+> FastWork::There is no place like localhost
+> http://fastwork.locknet.ro
+> WSM::Windows Service Management
+> http://wsm.berlios.de/
+>
+
+
+--
+FastWork::There is no place like localhost
+http://fastwork.locknet.ro
+WSM::Windows Service Management
+http://wsm.berlios.de/
+
+
+From oancea at gmail.com  Sat Nov 26 22:23:22 2005
+From: oancea at gmail.com (aurelian)
+Date: Sat, 26 Nov 2005 23:23:22 +0200
+Subject: [Medick-devel] Release 0.0.3 is near.
+Message-ID: <514f44140511261323s2563cb43x1458a4c13cfa69da@mail.gmail.com>
+
+Hello,
+
+I`m pushing hard to roll out the 0.0.3 release around 4 december (+
+7-14 days :))
+
+This release will include a lot of new features like associations, a
+new and nicer Routing system using the _SERVER['PATH_INFO'].
+
+Probably the Session will be also ready.
+
+application.bootstrap is dead, this way I try to ease the installing procedure.
+
+Also for 0.0.3 release I added on my todo list (but with a lower
+priority) this items:
+
+--> Medick UnitTests:
+
+Next week I will try  to fix the tests and to add more.
+
+--> Medick as a package:
+
+I will also try to make the first release on berlios web site, so an
+archive will be provideed (for the first time!).
+
+--> Medick web site:
+
+Also, I have began the work on the web site (it will be a wiki,
+pmwiki) and right now i`m trying to make a nice design for it.
+I was thinking to move the main web site to berlios sice there I have
+shell access.
+
+Regards,
+Aurelian.
+
+
+From apanaitescu at gmail.com  Mon Nov 28 11:15:05 2005
+From: apanaitescu at gmail.com (Andrei Panaitescu)
+Date: Mon, 28 Nov 2005 12:15:05 +0200
+Subject: [Medick-devel] Release 0.0.3 is near.
+In-Reply-To: <514f44140511261323s2563cb43x1458a4c13cfa69da@mail.gmail.com>
+References: <514f44140511261323s2563cb43x1458a4c13cfa69da@mail.gmail.com>
+Message-ID: <4e6a12c10511280215i6370e0f2tcc2f3fed410b36cf@mail.gmail.com>
+
+Hi Aurelian,
+
+On 11/26/05, aurelian wrote:
+> Hello,
+>
+> I`m pushing hard to roll out the 0.0.3 release around 4 december (+
+> 7-14 days :))
+> This release will include a lot of new features like associations, a
+> new and nicer Routing system using the _SERVER['PATH_INFO'].
+> Probably the Session will be also ready.
+
+I have found some annoing issues with the Session implementation and
+with the fact that I`m trying to put an ActiveRecordBase object into
+the session.
+
+First of all, the Object stored is quite big, so I think it will be
+usefull to use some more magick php methods and I`m talking about
+__sleep and __wakeup.
+
+Moreover, class members  added "on the fly" using __set/__get will not
+get serialized on the session, so basically as it is right now the
+ActiveRecord objects are not *persistent*.
+
+So, my sugestion:
+  * add the __sleep magic method and return *only* $this->fields object.
+  * on __wakeup, you can use $this->fields to recreate the Object State.
+  * FiledsAggregate should be also clean-up (to many iterations?) and
+the fact that the container is an ArrayObject (really, it should be a
+simple array) witch makes all the things harder.
+
+> application.bootstrap is dead, this way I try to ease the installing procedure.
+>
+> Also for 0.0.3 release I added on my todo list (but with a lower
+> priority) this items:
+>
+> --> Medick UnitTests:
+>
+> Next week I will try  to fix the tests and to add more.
+>
+> --> Medick as a package:
+>
+> I will also try to make the first release on berlios web site, so an
+> archive will be provideed (for the first time!).
+>
+> --> Medick web site:
+>
+> Also, I have began the work on the web site (it will be a wiki,
+> pmwiki) and right now i`m trying to make a nice design for it.
+> I was thinking to move the main web site to berlios since there I will have
+> shell access.
+>
+> Regards,
+> Aurelian.
+> _______________________________________________
+> Medick-devel mailing list
+> Medick-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/medick-devel
+-------------- next part --------------
+<?php
+
+class Session {
+
+    public function __construct() {    }
+    
+    public function start() {
+        session_regenerate_id();
+        session_start();
+    }
+    
+    public function hasValue($name) {
+        return isset($_SESSION[$name]);
+    }
+    
+    public function setValue($name, $value) {
+        $_SESSION[$name]= $value;
+    }
+    
+    public function getValue($name) {
+        return $_SESSION[$name];
+    }
+
+}
+
+class Foo {
+
+    private $container;
+
+    public function __construct() {
+        $this->container= array();
+    }
+
+    public function __set($name, $value) {
+        $this->container[$name] = $value;
+    }
+    
+    public function __get($name) {
+        return $this->container[$name];
+    }
+    
+    public function getContainer() {
+        return $this->container;
+    }
+    
+    # public function __sleep() {
+    #   return $this->container;
+    # }  
+    public function __wakeup() {
+        foreach ($this->container as $key=>$value) {
+            $this->$key=$value;
+        }
+    }
+
+}
+
+class Bar {
+
+    private $name;
+
+    public function __construct($name='bar') {
+        $this->name= $name;
+    }
+    
+    public function getName() {
+        return $this->name;
+    }
+    
+    public function setName($name) {
+        $this->name= $name;
+    }
+
+}
+
+$s= new Session();
+$s->start();
+
+$f= new Foo();
+$f->str= 'testone';
+$f->itg= 0;
+$f->obj= new Bar();
+
+if ($s->hasValue('foo')) {
+    echo 'has foo.<br />';
+    echo 'String  value: ' . $s->getValue('foo')->str . '<br />';
+    echo 'Integer value: ' . $s->getValue('foo')->itg . '<br />';
+    echo 'Object  value: ' . $s->getValue('foo')->obj->getName() . '<br />';
+    $s->getValue('foo')->itg++;
+    $s->getValue('foo')->obj->setName(mt_rand());
+    
+} else {
+    echo 'new foo.<br />';
+    $s->setValue('foo', $f);
+}
+
+From oancea at gmail.com  Mon Nov 28 22:15:45 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 28 Nov 2005 23:15:45 +0200
+Subject: [Medick-devel] Release 0.0.3 bumped.
+Message-ID: <514f44140511281315y280f7f36sa24d6678eec43b13@mail.gmail.com>
+
+Hello Andrei,
+
+I have decided to bump the release to 0.0.3 tonight, 5 days earlier as planned.
+
+This is the first nice-working release of medick, so you actually can
+use it now:)
+
+This release includes *a lot* of new features (like the working
+session class, associations in ActiveRecord) and code clean-up.
+
+The "impressive" changelog can be read-it here:
+http://svn.berlios.de/wsvn/medick/trunk/CHANGELOG?op=file&rev=285&sc=1
+
+You can grab the tarball from here:
+http://medick.locknet.ro/download/medick-0.0.3.tgz
+
+Regards,
+aurelian.
+
+
+From oancea at gmail.com  Mon Dec 26 17:43:11 2005
+From: oancea at gmail.com (aurelian)
+Date: Mon, 26 Dec 2005 18:43:11 +0200
+Subject: [Medick-devel] This month in Medick
+Message-ID: <514f44140512260843i33ad8d75t65ac933f62c15abe@mail.gmail.com>
+
+Hello,
+
+I have made some _major_ changes in medick this month:
+
+1. php version 5.1.1 is required.
+2. "clean-up" the routing system, is not yet completely done, but we
+now have a RoR like routing mechanism.
+3. medick application generator (will be refactored later on, but
+right now this plain php script will help you to get started with
+medick.
+4. removed the cool backtrace from the LoggingEvent object (was nice,
+but a real pain in the ass when you try to debug with var_dump :))
+5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+
+More refactorings will soon affect the ActiveRecord implementation.
+
+Bst Regards and a Happy New Year!
+Aurelian Oancea
+
+--
+My open source projects:
+http://fastwork.locknet.ro
+http://medick.locknet.ro
+http://wsm.berlios.de
+
+

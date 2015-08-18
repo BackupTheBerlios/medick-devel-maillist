@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] This month in Medick
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20This%20month%20in%20Medick&In-Reply-To=%3C4e6a12c10601030851q4793c3f1n118e457ecaadb007%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] This month in Medick</H1>
+    <B>Andrei Panaitescu</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20This%20month%20in%20Medick&In-Reply-To=%3C4e6a12c10601030851q4793c3f1n118e457ecaadb007%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] This month in Medick">apanaitescu at gmail.com
+       </A><BR>
+    <I>Tue Jan  3 17:51:14 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000020.html">[Medick-devel] This month in Medick
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Aurelian,
+
+I was on vacantion this month, but here are my comments:
+
+On 12/26/05, aurelian wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I have made some _major_ changes in medick this month:
+</I>&gt;<i>
+</I>&gt;<i> 1. php version 5.1.1 is required.
+</I>
+Grr, I didnt upgrade yet, and I think that at least this month I will
+stay to .0.5, there are only minor changes to make it run under 5.0.5
+(patch attached :D), so could you please reconsider this?
+
+&gt;<i> 2. &quot;clean-up&quot; the routing system, is not yet completely done, but we
+</I>&gt;<i> now have a RoR like routing mechanism.
+</I>
+It`s nice, but there still a long way to go, I will try to help you here.
+
+&gt;<i> 3. medick application generator (will be refactored later on, but
+</I>&gt;<i> right now this plain php script will help you to get started with
+</I>&gt;<i> medick.
+</I>
+super-duper.
+
+&gt;<i> 4. removed the cool backtrace from the LoggingEvent object (was nice,
+</I>&gt;<i> but a real pain in the ass when you try to debug with var_dump :))
+</I>&gt;<i> 5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+</I>
+mmm, oki.
+
+&gt;<i> More refactorings will soon affect the ActiveRecord implementation.
+</I>&gt;<i>
+</I>&gt;<i> B[e]st Regards and a Happy New Year!
+</I>// typo.
+&gt;<i> Aurelian Oancea
+</I>
+Some small notes:
+ -&gt; How do you test?
+Last changes on unit-test where made somewhere in November and you did
+some core changes since then. How do you know that everything works as
+expected?
+
+ -&gt; Another thing that I quite dont like is the implementation that
+you choose for Iterator/Collections in medick.util. It strange, and
+&quot;it stinks&quot;!
+
+And of course, php 5.1.1 as a requirement.
+
+But in the end I think you did a great work in December :)
+-------------- next part --------------
+Index: medick/util.php
+===================================================================
+--- medick/util.php	(revision 312)
++++ medick/util.php	(working copy)
+@@ -142,7 +142,7 @@
+ 
+     private $elements;
+ 
+-    public function AbstractCollection(Array $elements=array()) {
++    public function AbstractCollection(/*Array*/ $elements=array()) {
+         $this-&gt;elements= $elements;
+     }
+ 
+Index: action/controller/Route.php
+===================================================================
+--- action/controller/Route.php	(revision 312)
++++ action/controller/Route.php	(working copy)
+@@ -90,7 +90,7 @@
+     private $components;
+ 
+ 
+-    public function Route($route_list, $name = '', Array $defaults = array(), Array $requirements = array()) {
++    public function Route($route_list, $name = '', /*Array*/ $defaults = array(), /*Array*/ $requirements = array()) {
+ 
+         $this-&gt;components= new Components();
+ 
+@@ -140,7 +140,7 @@
+      *
+      * @param array an array witch holds defaults values for this Route.
+      */
+-    public function setDefaults(Array $defaults) {
++    public function setDefaults(/*Array*/ $defaults) {
+         $this-&gt;defaults= $defaults;
+     }
+ 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000020.html">[Medick-devel] This month in Medick
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

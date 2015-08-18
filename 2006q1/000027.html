@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] Version 0.0.4RC1 released
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Version%200.0.4RC1%20released&In-Reply-To=%3C4e6a12c10601082320tc5692ffi4e118e773a81b7f2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000026.html">
+   <LINK REL="Next"  HREF="000029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] Version 0.0.4RC1 released</H1>
+    <B>Andrei Panaitescu</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Version%200.0.4RC1%20released&In-Reply-To=%3C4e6a12c10601082320tc5692ffi4e118e773a81b7f2%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] Version 0.0.4RC1 released">apanaitescu at gmail.com
+       </A><BR>
+    <I>Mon Jan  9 08:20:24 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000026.html">[Medick-devel] Version 0.0.4RC1 released
+</A></li>
+        <LI>Next message: <A HREF="000029.html">[Medick-devel] medick-0.0.4 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Aurelian.
+
+As usual, I have been away from computer this weekend.
+First of all, you`ve did a great job and I aggree with you that 0.0.4
+is almost ready.
+
+But, by the power of unit-tests I`ve discovered some issues.
+- wrong method calls in ARAssociations and ARBase
+- Mutil, wrong Collection::isEmpty return value.
+- didnt understand the code from ActiveRecordBase::getUpdateSql, and reverted.
+
+The patch to solve those problems is attached.
+
+Anyway, I think on the 0.1.0 (or 0.0.5 as you said) we should focus on
+Unit testing, right now I think that only 10-15% of the framework is
+coverd by test cases.
+
+On 1/8/06, aurelian &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">oancea at gmail.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Please consider this relase as a relase candidate, medick 0.0.4RC1.
+</I>&gt;<i> Andrei, if everything works for you, it will become the final release.
+</I>&gt;<i> The tar-ball will be published after your OK.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> FastWork::There is no place like localhost
+</I>&gt;<i> <A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+</I>&gt;<i> WSM::Windows Service Management
+</I>&gt;<i> <A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Medick-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">Medick-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/medick-devel">http://lists.berlios.de/mailman/listinfo/medick-devel</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+Index: test/test/active/record/associations/HasOneTest.php
+===================================================================
+--- test/test/active/record/associations/HasOneTest.php	(revision 329)
++++ test/test/active/record/associations/HasOneTest.php	(working copy)
+@@ -37,7 +37,7 @@
+     public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+         
+         $author= new Author();
+         $author-&gt;name= 'Andrei Cristescu';
+Index: test/test/active/record/DBOperationsTest.php
+===================================================================
+--- test/test/active/record/DBOperationsTest.php	(revision 329)
++++ test/test/active/record/DBOperationsTest.php	(working copy)
+@@ -29,7 +29,7 @@
+     public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+     }
+     
+     /** tearDown */
+Index: test/test/active/record/FindTest.php
+===================================================================
+--- test/test/active/record/FindTest.php	(revision 329)
++++ test/test/active/record/FindTest.php	(working copy)
+@@ -32,7 +32,7 @@
+      public function setUp() {
+         Registry::put(new MockConfigurator(), '__configurator');
+         Registry::put(new Logger(), '__logger');
+-        ActiveRecordBase::close();
++        ActiveRecordBase::close_connection();
+         $author= new Author();
+         $author-&gt;name= &quot;Andrei Cristescu&quot;;
+         $author-&gt;email= &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">andrei.cristescu at foo-factory.info</A>&quot;;
+Index: test/test/medick/CollectionTest.php
+===================================================================
+--- test/test/medick/CollectionTest.php	(revision 329)
++++ test/test/medick/CollectionTest.php	(working copy)
+@@ -23,8 +23,8 @@
+     }
+     
+     function testAdd() {
+-        // $f= $this-&gt;col-&gt;add(new Foo());
+-        // $this-&gt;assertEqual('Foo', $f-&gt;getClassName());
++        $f= $this-&gt;col-&gt;add(new Foo());
++        $this-&gt;assertEqual('Foo', $f-&gt;getClassName());
+     }
+     
+     function testEmpty() {
+@@ -33,10 +33,10 @@
+     }
+     
+     function testRemove() {
+-         // $f= new Foo();
+-         // $this-&gt;col-&gt;add($f);
+-         // $this-&gt;col-&gt;remove($f);
+-         // $this-&gt;assertTrue($this-&gt;col-&gt;isEmpty());
++         $f= new Foo();
++         $this-&gt;col-&gt;add($f);
++         $this-&gt;col-&gt;remove($f);
++         $this-&gt;assertTrue($this-&gt;col-&gt;isEmpty());
+     }
+     
+     function testSize() {
+@@ -58,10 +58,10 @@
+     }
+ 
+     function testArray() {
+-        // $this-&gt;col[] = new Foo();
+-        // $this-&gt;col[] = new Bar();
+-        // $this-&gt;col[] = new Baz();
+-        // $this-&gt;assertEqual($this-&gt;col-&gt;size(), 3);
++        $this-&gt;col[] = new Foo();
++        $this-&gt;col[] = new Bar();
++        $this-&gt;col[] = new Baz();
++         $this-&gt;assertEqual($this-&gt;col-&gt;size(), 3);
+     }
+ 
+     function testOffsetExists() {
+@@ -70,9 +70,9 @@
+    }
+ 
+    function testContains() {
+-       // $f= new Foo();
+-       // $this-&gt;col[] = $f;
+-       // $this-&gt;assertTrue($this-&gt;col-&gt;contains($f)); 
++       $f= new Foo();
++       $this-&gt;col[] = $f;
++       $this-&gt;assertTrue($this-&gt;col-&gt;contains($f)); 
+    }
+ 
+ }
+Index: test/application/models/book.php
+===================================================================
+--- test/application/models/book.php	(revision 329)
++++ test/application/models/book.php	(working copy)
+@@ -9,9 +9,8 @@
+     protected $has_one= array('author');
+     
+     public static function find() {
+-        $args= func_get_args();
+-        self::setTable(__CLASS__);
+-        return self::__find($args);
++        ActiveRecordBase::initialize(__CLASS__);
++        return ActiveRecordBase::__find(func_get_args());
+     }
+ 
+ }
+Index: test/application/models/author.php
+===================================================================
+--- test/application/models/author.php	(revision 329)
++++ test/application/models/author.php	(working copy)
+@@ -6,9 +6,8 @@
+ 
+ class Author extends ActiveRecordBase {
+     public static function find() {
+-        $args= func_get_args();
+-        self::setTable(__CLASS__);
+-        return self::__find($args);
++        ActiveRecordBase::initialize(__CLASS__);
++        return ActiveRecordBase::__find(func_get_args());
+     }
+ }
+ 
+Index: test/mock/MockCollection.php
+===================================================================
+--- test/mock/MockCollection.php	(revision 329)
++++ test/mock/MockCollection.php	(working copy)
+@@ -2,7 +2,7 @@
+ 
+ // $Id$
+     
+-    class MockCollection extends AbstractCollection {
++    class MockCollection extends Collection {
+     
+     }
+ 
+Index: libs/active/record/Base.php
+===================================================================
+--- libs/active/record/Base.php	(revision 329)
++++ libs/active/record/Base.php	(working copy)
+@@ -437,15 +437,15 @@
+     private function getUpdateSql() {
+         $sqlSnippet = '';
+         if ($this-&gt;pk !== NULL) {
+-            $sqlSnippet = ' WHERE ' . $this-&gt;pk . ' = ' . $this-&gt;fields-&gt;getPrimaryKey()-&gt;getValue();
++            $sqlSnippet = ' WHERE ' . $this-&gt;pk . ' = ' . $this-&gt;row-&gt;getPrimaryKey()-&gt;getValue();
+         }
+         $sql  = 'UPDATE ' . ActiveRecordBase::$table_name . ' SET ';
+-        $sql .= implode(' = ?, ', $this-&gt;row-&gt;getAffectedFieldsNames());
+-        /*
+-        foreach($this-&gt;fields-&gt;getAffectedFields() as $field) {
++        // $sql .= implode(' = ?, ', $this-&gt;row-&gt;getAffectedFieldsNames());
++        
++        foreach($this-&gt;row-&gt;getAffectedFields() as $field) {
+             $sql .= $field-&gt;getName() . ' = ?, ';
+         }
+-        */
++        
+         return substr($sql, 0, -2) . $sqlSnippet;
+     }
+ 
+Index: libs/active/record/Association.php
+===================================================================
+--- libs/active/record/Association.php	(revision 329)
++++ libs/active/record/Association.php	(working copy)
+@@ -178,11 +178,13 @@
+      * @see Association#execute
+      */
+     public function execute() {
+-        $fk= $this-&gt;class.'_id';
+-        for($it = $this-&gt;fields-&gt;getIterator(); $it-&gt;valid(); $it-&gt;next()) {
+-            if ( $it-&gt;current()-&gt;getName() == $fk ) {
++        $fk= $this-&gt;class.'_id'; // foreign key name: the class name+&quot;_id&quot; suffix&quot;
++        $it= $this-&gt;fields-&gt;iterator();
++        while($it-&gt;hasNext()) {
++            $current= $it-&gt;next();
++            if ($current-&gt;getName() == $fk) {
+                 $this-&gt;pre_execution();
+-                $ret= ActiveRecordBase::__find(array($it-&gt;current()-&gt;getValue()));
++                $ret= ActiveRecordBase::__find(array($current-&gt;getValue()));
+                 $this-&gt;post_execution();
+                 return $ret;
+             }
+Index: libs/medick/util.php
+===================================================================
+--- libs/medick/util.php	(revision 329)
++++ libs/medick/util.php	(working copy)
+@@ -277,7 +277,7 @@
+      * @return bool, TRUE if the Collection is empty
+      */
+     public function isEmpty() {
+-        return $this-&gt;size() &gt; 0;
++        return $this-&gt;size() == 0;
+     }
+ 
+     /**
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000026.html">[Medick-devel] Version 0.0.4RC1 released
+</A></li>
+	<LI>Next message: <A HREF="000029.html">[Medick-devel] medick-0.0.4 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

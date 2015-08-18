@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] SPL - another reason to remove this dependency
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20SPL%20-%20another%20reason%20to%20remove%20this%20dependency&In-Reply-To=%3C4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] SPL - another reason to remove this dependency</H1>
+    <B>Andrei Panaitescu</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20SPL%20-%20another%20reason%20to%20remove%20this%20dependency&In-Reply-To=%3C4e6a12c10510260001n2cbea5fkb6a729e1a1e281a0%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] SPL - another reason to remove this dependency">apanaitescu at gmail.com
+       </A><BR>
+    <I>Wed Oct 26 09:01:31 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Medick-devel] Fwd: [Medick-svn] r234, Major API change in Models.
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have found another reason to try to remove the crappy spl dependency
+from medick:
+under php 5.0.5 some spl classes are not defined, like the
+RecursiveCachingIterator in runner.php.
+
+We have to use some other method to iterate over the files in a folder.
+
+More over, the dependency from XMLConfigurator is almost removed (the
+only place where is still used is getLoggerOutputters method).
+
+Wait for my runner patch, independent of php 5.x version and spl.
+
+Regards,
+Andrei.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Medick-devel] Fwd: [Medick-svn] r234, Major API change in Models.
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

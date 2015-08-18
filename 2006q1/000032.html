@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] r345.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20r345.&In-Reply-To=%3C514f44140602062320r1189447vba3b510deb34c885%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000031.html">
+   <LINK REL="Next"  HREF="000033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] r345.</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20r345.&In-Reply-To=%3C514f44140602062320r1189447vba3b510deb34c885%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] r345.">oancea at gmail.com
+       </A><BR>
+    <I>Tue Feb  7 08:20:25 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000031.html">[Medick-devel] Fwd: [Medick-svn] r344
+</A></li>
+        <LI>Next message: <A HREF="000033.html">[Medick-devel] Promoting medick.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#32">[ date ]</a>
+              <a href="thread.html#32">[ thread ]</a>
+              <a href="subject.html#32">[ subject ]</a>
+              <a href="author.html#32">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+Again, the message was too big, so here it`s the log of 354 commit.
+
+Author: aurelian
+Date: 2006-02-06 20:33:06 +0100 (Mon, 06 Feb 2006)
+New Revision: 345
+
+Added:
+   applications/eltodo/app/helpers/project_helper.php
+   applications/eltodo/app/views/project/overview.phtml
+   applications/eltodo/libs/Textile.php
+   applications/eltodo/public/images/edit.png
+   trunk/test/application/models/news.php
+   trunk/test/test/active/record/QueryBuilderTest.php
+   trunk/test/test/active/record/SQLCommandTest.php
+   trunk/test/test/active/record/ValidatorTest.php
+Modified:
+   applications/eltodo/app/controllers/application.php
+   applications/eltodo/app/controllers/project_controller.php
+   applications/eltodo/app/models/project.php
+   trunk/libs/action/controller/Injector.php
+   trunk/libs/action/controller/Route.php
+   trunk/libs/active/record/Base.php
+   trunk/libs/active/record/QueryBuilder.php
+   trunk/libs/active/record/SQLCommand.php
+   trunk/libs/active/record/Validator.php
+   trunk/test/application/models/author.php
+   trunk/test/application/models/book.php
+   trunk/test/application/models/fakemodeltwo.php
+   trunk/test/mock/MockConfigurator.php
+   trunk/test/test/action/controller/InjectorTest.php
+   trunk/test/test/active/record/DBOperationsTest.php
+   trunk/test/test/active/record/FindTest.php
+   trunk/test/test/active/record/associations/HasOneTest.php
+Log:
+ -- fix elTodo sample application
+ -- fix unit tests
+ -- added Validator, QueryBuilder and SQLCommand unit tests.
+ -- added limit and offset options on QueryBuilder
+ -- removed white spaces from columns clause on SQLCommand
+ -- added API docs on what type on clauses we know how to parse
+ -- removed unused select parameter on SQLCommand::select
+ -- Injector- use application_path setting from xml configuration file
+if SERVER[MEDICK_APPLICATION_PATH] is not found
+ -- Injector::Injector added append parameter with will add 'app/'
+string to application path, defaults to TRUE (not breaking BC)
+ -- added Injector::getType($type), $type defaults to NULL
+ -- added Route::toString method + debug with logger when the Route is found.
+ -- bundled a small modified version of Textile class (BSD-like?) -
+version 2.0beta.
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000031.html">[Medick-devel] Fwd: [Medick-svn] r344
+</A></li>
+	<LI>Next message: <A HREF="000033.html">[Medick-devel] Promoting medick.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#32">[ date ]</a>
+              <a href="thread.html#32">[ thread ]</a>
+              <a href="subject.html#32">[ subject ]</a>
+              <a href="author.html#32">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

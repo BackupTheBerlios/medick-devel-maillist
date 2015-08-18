@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] Release 0.0.3 is near.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Release%200.0.3%20is%20near.&In-Reply-To=%3C4e6a12c10511280215i6370e0f2tcc2f3fed410b36cf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] Release 0.0.3 is near.</H1>
+    <B>Andrei Panaitescu</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Release%200.0.3%20is%20near.&In-Reply-To=%3C4e6a12c10511280215i6370e0f2tcc2f3fed410b36cf%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] Release 0.0.3 is near.">apanaitescu at gmail.com
+       </A><BR>
+    <I>Mon Nov 28 11:15:05 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Medick-devel] Release 0.0.3 is near.
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[Medick-devel] Release 0.0.3 bumped.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Aurelian,
+
+On 11/26/05, aurelian wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I`m pushing hard to roll out the 0.0.3 release around 4 december (+
+</I>&gt;<i> 7-14 days :))
+</I>&gt;<i> This release will include a lot of new features like associations, a
+</I>&gt;<i> new and nicer Routing system using the _SERVER['PATH_INFO'].
+</I>&gt;<i> Probably the Session will be also ready.
+</I>
+I have found some annoing issues with the Session implementation and
+with the fact that I`m trying to put an ActiveRecordBase object into
+the session.
+
+First of all, the Object stored is quite big, so I think it will be
+usefull to use some more magick php methods and I`m talking about
+__sleep and __wakeup.
+
+Moreover, class members  added &quot;on the fly&quot; using __set/__get will not
+get serialized on the session, so basically as it is right now the
+ActiveRecord objects are not *persistent*.
+
+So, my sugestion:
+  * add the __sleep magic method and return *only* $this-&gt;fields object.
+  * on __wakeup, you can use $this-&gt;fields to recreate the Object State.
+  * FiledsAggregate should be also clean-up (to many iterations?) and
+the fact that the container is an ArrayObject (really, it should be a
+simple array) witch makes all the things harder.
+
+&gt;<i> application.bootstrap is dead, this way I try to ease the installing procedure.
+</I>&gt;<i>
+</I>&gt;<i> Also for 0.0.3 release I added on my todo list (but with a lower
+</I>&gt;<i> priority) this items:
+</I>&gt;<i>
+</I>&gt;<i> --&gt; Medick UnitTests:
+</I>&gt;<i>
+</I>&gt;<i> Next week I will try  to fix the tests and to add more.
+</I>&gt;<i>
+</I>&gt;<i> --&gt; Medick as a package:
+</I>&gt;<i>
+</I>&gt;<i> I will also try to make the first release on berlios web site, so an
+</I>&gt;<i> archive will be provideed (for the first time!).
+</I>&gt;<i>
+</I>&gt;<i> --&gt; Medick web site:
+</I>&gt;<i>
+</I>&gt;<i> Also, I have began the work on the web site (it will be a wiki,
+</I>&gt;<i> pmwiki) and right now i`m trying to make a nice design for it.
+</I>&gt;<i> I was thinking to move the main web site to berlios since there I will have
+</I>&gt;<i> shell access.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Aurelian.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Medick-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/medick-devel">Medick-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/medick-devel">http://lists.berlios.de/mailman/listinfo/medick-devel</A>
+</I>-------------- next part --------------
+&lt;?php
+
+class Session {
+
+    public function __construct() {    }
+    
+    public function start() {
+        session_regenerate_id();
+        session_start();
+    }
+    
+    public function hasValue($name) {
+        return isset($_SESSION[$name]);
+    }
+    
+    public function setValue($name, $value) {
+        $_SESSION[$name]= $value;
+    }
+    
+    public function getValue($name) {
+        return $_SESSION[$name];
+    }
+
+}
+
+class Foo {
+
+    private $container;
+
+    public function __construct() {
+        $this-&gt;container= array();
+    }
+
+    public function __set($name, $value) {
+        $this-&gt;container[$name] = $value;
+    }
+    
+    public function __get($name) {
+        return $this-&gt;container[$name];
+    }
+    
+    public function getContainer() {
+        return $this-&gt;container;
+    }
+    
+    # public function __sleep() {
+    #   return $this-&gt;container;
+    # }  
+    public function __wakeup() {
+        foreach ($this-&gt;container as $key=&gt;$value) {
+            $this-&gt;$key=$value;
+        }
+    }
+
+}
+
+class Bar {
+
+    private $name;
+
+    public function __construct($name='bar') {
+        $this-&gt;name= $name;
+    }
+    
+    public function getName() {
+        return $this-&gt;name;
+    }
+    
+    public function setName($name) {
+        $this-&gt;name= $name;
+    }
+
+}
+
+$s= new Session();
+$s-&gt;start();
+
+$f= new Foo();
+$f-&gt;str= 'testone';
+$f-&gt;itg= 0;
+$f-&gt;obj= new Bar();
+
+if ($s-&gt;hasValue('foo')) {
+    echo 'has foo.&lt;br /&gt;';
+    echo 'String  value: ' . $s-&gt;getValue('foo')-&gt;str . '&lt;br /&gt;';
+    echo 'Integer value: ' . $s-&gt;getValue('foo')-&gt;itg . '&lt;br /&gt;';
+    echo 'Object  value: ' . $s-&gt;getValue('foo')-&gt;obj-&gt;getName() . '&lt;br /&gt;';
+    $s-&gt;getValue('foo')-&gt;itg++;
+    $s-&gt;getValue('foo')-&gt;obj-&gt;setName(mt_rand());
+    
+} else {
+    echo 'new foo.&lt;br /&gt;';
+    $s-&gt;setValue('foo', $f);
+}
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Medick-devel] Release 0.0.3 is near.
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[Medick-devel] Release 0.0.3 bumped.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,22 @@
+From oancea at gmail.com  Sat Jun 24 11:16:14 2006
+From: oancea at gmail.com (aurelian)
+Date: Sat, 24 Jun 2006 12:16:14 +0300
+Subject: [Medick-devel] Medick-0.2.3 Released
+Message-ID: <514f44140606240216y1f4fbad7vfcb39dae6b48a3b4@mail.gmail.com>
+
+medick[1] version 0.2.3 was released today.
+For download you can use one of berlios[2] mirrors[3].
+
+This is the "still alive" proof release! It includes minor changes and
+fixes to 0.2.2.
+For a complete list of changes see the CHANGELOG[4] file.
+
+medick is a PHP 5 Web Framework released under a BSD style LICENSE[5].
+
+[1] http://medick.locknet.ro
+[2] http://berlios.de
+[3] http://developer.berlios.de/project/showfiles.php?group_id=4023
+[4] http://medick.locknet.ro/api/ric_CHANGELOG.html
+[5] http://medick.locknet.ro/api/ric_LICENSE.html
+
+

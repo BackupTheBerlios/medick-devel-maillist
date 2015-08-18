@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] This month in Medick
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2006q1/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20This%20month%20in%20Medick&In-Reply-To=%3C514f44140601041212s1e9d8a7aid66502a25263061a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000023.html">
+   <LINK REL="Next"  HREF="000021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] This month in Medick</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20This%20month%20in%20Medick&In-Reply-To=%3C514f44140601041212s1e9d8a7aid66502a25263061a%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] This month in Medick">oancea at gmail.com
+       </A><BR>
+    <I>Wed Jan  4 21:12:58 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000023.html">[Medick-devel] This month in Medick
+</A></li>
+        <LI>Next message: <A HREF="000021.html">[Medick-devel] Roadmap to 0.1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Andrei,
+
+&gt;<i> SimpleTest is still vorking with php 5.0.5
+</I>
+Oki, commited your patch [1]. I didnt have the time to test on php 5.1.1.
+
+&gt;<i> &gt; I have 3 applications installed locally (one is the eltodo) and I
+</I>&gt;<i> &gt; browse them. If any wierd behavior is spotted I try to fix it. The
+</I>&gt;<i> &gt; other two applications:
+</I>&gt;<i> &gt; elproject (for testing ActiveRecord:::Asociations)
+</I>&gt;<i> &gt; depot (for session testing), somwhow similar with Rails depot application.
+</I>&gt;<i>
+</I>&gt;<i> Great, add them to the repository!
+</I>
+Not yet.
+
+&gt;<i> Well, lets say that the IIterator Interface is ok for the moment.
+</I>&gt;<i> I think it will be better if your Collection will implement the
+</I>&gt;<i> ArrayAccess interface from SPL.
+</I>&gt;<i> <A HREF="http://www.php.net/~helly/php/ext/spl/interfaceArrayAccess.html">http://www.php.net/~helly/php/ext/spl/interfaceArrayAccess.html</A>
+</I>
+I will have a look. But until revision 280 I had the Collection class
+under repository, removed in 281 because I thought that is bloated[2].
+
+&gt;<i> Wow, I saw this one now:
+</I>&gt;<i> &gt; 5. removed the ActionViewBase interface, and renamed Sonart to ActionViewBase :)
+</I>&gt;<i> Why did you do that?
+</I>&gt;<i> You should keep the interface man, this is not a wise code-clean-up.
+</I>&gt;<i> Maybe later we will add PHPTAL or other type of template engine.
+</I>
+I will have a look here too and I will probably reconsider my change.
+
+&gt;<i> interface ITemplate {
+</I>&gt;<i>
+</I>&gt;<i>   // common methods like assign or render.
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> abstract class AbstractTemplate extends Object implements ITemplate {
+</I>&gt;<i>
+</I>&gt;<i>   public static function factory($type) {
+</I>&gt;<i>
+</I>&gt;<i>     // load a template engine here.
+</I>&gt;<i>
+</I>&gt;<i>   }
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> class PHPTemplate extends AbstractTemplate {
+</I>&gt;<i>
+</I>&gt;<i>   // implement the methods.
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000023.html">[Medick-devel] This month in Medick
+</A></li>
+	<LI>Next message: <A HREF="000021.html">[Medick-devel] Roadmap to 0.1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

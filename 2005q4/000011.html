@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] Revision 272.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2005q4/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Revision%20272.&In-Reply-To=%3C514f44140511200109p42e7d34ck8189f30d3b3401ce%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000010.html">
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] Revision 272.</H1>
+    <B>aurelian</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Revision%20272.&In-Reply-To=%3C514f44140511200109p42e7d34ck8189f30d3b3401ce%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] Revision 272.">oancea at gmail.com
+       </A><BR>
+    <I>Sun Nov 20 10:09:33 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000010.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+        <LI>Next message: <A HREF="000012.html">[Medick-devel] [ patch ]ACBase
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+the diff was more than 40k, so here is the commit log:
+
+ - [ config/app.bootstrap.php ] removed vendor from the include_path
+ - updated TODO, CHANGELOG
+ - clean-up creole.SQLException
+ - [ ARBase ]:
+   - removed hasResults and reset methods (unused methods)
+   - try to Inject the model in __find method, before throwing an Exception
+   - added before/after filters
+   - clean-up Association (magick __getMethod)
+   - association variabiles are defined as protected
+   - added Field::formattedName
+ - [ ARAssociations ]: implemented associations (read-only)
+ - [ ARField ]: added formattedName class member
+ - medick/Exception.php:
+   - added AssociationNotFoundException
+   - added userInfo member to MedickException
+ - [ ACInjector ] added injectInclude_path method
+ - [ ACBase ] clean-up the output buffering in process_with_exception method
+ - [ action/controller/templates/error.phtml ] removed show source
+option sice it was not so useful
+ - removed action.controller.cli package, affected classes:
+   - medick.Dispatcher
+   - action.controller.Request
+   - action.controller.Response
+
+--
+FastWork::There is no place like localhost
+<A HREF="http://fastwork.locknet.ro">http://fastwork.locknet.ro</A>
+WSM::Windows Service Management
+<A HREF="http://wsm.berlios.de/">http://wsm.berlios.de/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000010.html">[Medick-devel] SPL - another reason to remove this dependency
+</A></li>
+	<LI>Next message: <A HREF="000012.html">[Medick-devel] [ patch ]ACBase
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>

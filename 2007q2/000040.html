@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Medick-devel] Medick Reloaded
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/medick-devel/2007q2/index.html" >
+   <LINK REL="made" HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Medick%20Reloaded&In-Reply-To=%3C514f44140706110736q5c4ecbd0p925c7c5a72227b28%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Medick-devel] Medick Reloaded</H1>
+    <B>Aurelian Oancea</B> 
+    <A HREF="mailto:medick-devel%40lists.berlios.de?Subject=Re%3A%20%5BMedick-devel%5D%20Medick%20Reloaded&In-Reply-To=%3C514f44140706110736q5c4ecbd0p925c7c5a72227b28%40mail.gmail.com%3E"
+       TITLE="[Medick-devel] Medick Reloaded">oancea at gmail.com
+       </A><BR>
+    <I>Mon Jun 11 16:36:38 CEST 2007</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000041.html">[Medick-devel] Your account has been created
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear all,
+
+The medick PHP5 Framework is still alive and I hope to release a new
+version by the end of this week. The new medick version will be 0.4
+and not 0.3.
+
+Compatibility breaks:
+
+1. Last year, the plan was to remove the XML configuration file and to
+introduce some plain PHP code to configure a medick application.
+
+After one year, I don't think that I want to make this change, even
+more, I will like to revert the database settings back to the XML once
+again.
+
+2. In medick one could use an array of strings as before filters for
+controllers, but the method to do so was called *before_filter*, so it
+will make more sense to rename that to *before_filters*.
+
+New features:
+
+1. after filters for controllers
+2. HTTPRequest gets a is_xhr() method to indicate if the request was
+made using an AJAX call
+3. medick will know how to render JSON with render_json
+
+Today, while I was reading the code from ActionController, I have
+realized how many nice features medick has but without any
+documentation. So the focus for me is the documentation.
+
+
+That's it for now. Take care.
+-- 
+Aurelian Oancea
+
+Web: <A HREF="http://www.locknet.ro">http://www.locknet.ro</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000041.html">[Medick-devel] Your account has been created
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/medick-devel">More information about the Medick-devel
+mailing list</a><br>
+</body></html>
